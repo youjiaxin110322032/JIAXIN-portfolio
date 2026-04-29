@@ -70,7 +70,9 @@
       -webkit-backdrop-filter: blur(20px);       /* Safari 相容前綴 */
       background: rgba(6, 6, 15, 0.7);          /* 半透明深色背景 */
       border-bottom: 1px solid rgba(245, 200, 66, 0.08);  /* 極淡金色下邊線 */
-      transition: padding 0.3s;                  /* 滾動時縮小動畫 */
+      transition: padding 0.3s, transform 0.3s ease-in-out, opacity 0.3s ease-in-out;  /* 添加 transform 和 opacity 過渡 */
+      transform: translateY(0);  /* 初始位置 */
+      opacity: 1;  /* 初始不透明 */
     }
 
     /* 導覽列 Logo 區塊（圖示 + 品牌名稱） */
@@ -1559,7 +1561,7 @@
       <li><a href="#events">Events</a></li>
       <li><a href="#community">Community</a></li>
     </ul>
-    <a href="#join" class="btn btn-outline">Contact me</a>
+    <a href="#join" class="btn btn-outline">Contact us</a>
   </nav>
 
   <!-- ─── 英雄區塊：全螢幕首屏，星空背景 + 主標題 + CTA 按鈕 ─── -->
@@ -1572,9 +1574,7 @@
     <div class="orb orb-3"></div>
 
     <div class="hero-content">
-      <!-- 頂部徽章：顯示目前開放申請狀態 -->
-      <div class="hero-badge">Available for freelance design projects — Contact me.</div>
-
+      
       <!-- 主標題（Automated 為金色斜體強調） -->
       <h1 class="hero-title">
         Where technology<br />
@@ -1587,13 +1587,11 @@
       <p class="hero-desc">
         <em>Who We Are</em><br />
         We are a team of interactive tech and multimedia designers, holding degrees from the Department of Digital Technology Design with a focus on interactive experiences. Our collective expertise covers frontend web design, graphic design, visual communication, brand identity, photography, and video editing. We go beyond traditional 2D formats, bringing design goals to life by merging interactive technology with strong product concepts.<br />
-        <em>Our Philosophy</em><br />
-        We build "design that feels, reacts, and connects." From Augmented Reality (AR) and Virtual Reality (VR) to real-time AI detection and UI/UX, we believe design is far more than what meets the eye. By crafting multi-sensory interactions, we aim to deliver deep, immersive experiences for our users. We turn concepts into creative solutions, ultimately creating designs that truly stand out.
       </p>
 
       <!-- CTA 按鈕組：主要申請按鈕 + 次要探索按鈕 -->
       <div class="hero-cta">
-        <a href="#join" class="btn btn-primary btn-lg">Apply for Membership</a>
+        <a href="#join" class="btn btn-primary btn-lg">Contact us</a>
         <a href="#pillars" class="btn btn-ghost btn-lg">Explore Programs</a>
       </div>
 
@@ -2078,10 +2076,33 @@
     );
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // ── 導覽列捲動縮小：滾動超過 60px 後縮小內距 ──
+    // ── 導覽列捲動縮小與隱藏：滾動超過 60px 後縮小內距，並根據滾動方向隱藏/顯示 ──
     const nav = document.querySelector('nav');
+    let lastScrollY = window.scrollY;
+    let isNavHidden = false;
+
     window.addEventListener('scroll', () => {
-      nav.style.padding = window.scrollY > 60 ? '14px 60px' : '20px 60px';
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollY;
+      const isScrollingUp = currentScrollY < lastScrollY;
+
+      // 縮小內距邏輯（保留原有功能）
+      nav.style.padding = currentScrollY > 60 ? '14px 60px' : '20px 60px';
+
+      // 隱藏/顯示邏輯
+      if (isScrollingDown && currentScrollY > 100 && !isNavHidden) {
+        // 向下滾動且滾動距離超過100px，且導覽列未隱藏時，隱藏導覽列
+        nav.style.transform = 'translateY(-100%)';
+        nav.style.opacity = '0';
+        isNavHidden = true;
+      } else if (isScrollingUp && isNavHidden) {
+        // 向上滾動且導覽列已隱藏時，顯示導覽列
+        nav.style.transform = 'translateY(0)';
+        nav.style.opacity = '1';
+        isNavHidden = false;
+      }
+
+      lastScrollY = currentScrollY;
     });
 
     // ── 游標光暈線性插值追蹤（lerp follow）──
