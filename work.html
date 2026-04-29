@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品 — JIAXIN DESIGN STUDIOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="program.css" />
+  <link rel="stylesheet" href="work.css" />
+</head>
+<body class="prog-page">
+
+  <!-- Loading Screen -->
+  <div id="loaderOverlay" class="loader-overlay">
+    <canvas id="loaderCanvas"></canvas>
+    <div class="loader-center">
+      <img src="JX LOGO (1).png" alt="JIAXIN" class="loader-logo-img" />
+      <div class="loader-brand">JIAXIN DESIGN STUDIOS</div>
+      <div class="loader-dots"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="JX LOGO (1).png" alt="JIA XIN DESIGN" />
+      <div class="nav-brand">JIAXIN DESIGN<span>STUDIOS</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="program.html" class="active">Program</a></li>
+      <li><a href="index.html#events">Events</a></li>
+      <li><a href="index.html#community">Community</a></li>
+    </ul>
+    <button id="loginBtn" class="btn btn-outline">登入 Login</button>
+  </nav>
+
+  <!-- Work Header -->
+  <header class="work-header">
+    <div class="work-header-bg" id="workHeaderBg"></div>
+    <div class="work-header-content">
+      <a href="program.html" class="work-back" id="workBreadcrumb">← 返回分類</a>
+      <div class="work-cat-badge" id="workCatBadge"></div>
+      <h1 class="prog-title" id="workTitle">—</h1>
+      <p class="prog-sub" id="workTitleEn"></p>
+    </div>
+  </header>
+
+  <!-- Admin toolbar -->
+  <div class="prog-toolbar admin-only" style="display:none">
+    <button class="btn btn-primary" onclick="openEditWork()">✏ 編輯此作品</button>
+    <button class="btn btn-outline" style="color:#ff6644;border-color:#ff664466" onclick="removeWork()">✕ 刪除作品</button>
+  </div>
+
+  <!-- Work body — DM layout -->
+  <section class="work-body-section">
+    <div class="dm-container" id="workDMLayout"></div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" onclick="event.stopPropagation()" />
+  </div>
+
+  <!-- Edit Work Modal -->
+  <div class="prog-modal" id="workEditModal">
+    <div class="prog-modal-box">
+      <button class="prog-modal-close" onclick="closeEditWork()">✕</button>
+      <h2>編輯作品</h2>
+      <form id="workEditForm">
+        <div class="prog-field-row">
+          <div class="prog-field">
+            <label>作品名稱（中文）*</label>
+            <input type="text" id="ewTitle" placeholder="動態宣傳影片" required />
+          </div>
+          <div class="prog-field">
+            <label>Work Name (English)</label>
+            <input type="text" id="ewTitleEn" placeholder="Promo Video" />
+          </div>
+        </div>
+        <div class="prog-field">
+          <label>縮圖 URL Thumbnail</label>
+          <input type="url" id="ewThumb" placeholder="https://..." />
+        </div>
+        <div class="prog-field-row">
+          <div class="prog-field">
+            <label>作品簡介（中文，約50字）</label>
+            <textarea id="ewDesc" rows="3" maxlength="150"></textarea>
+          </div>
+          <div class="prog-field">
+            <label>Description (English)</label>
+            <textarea id="ewDescEn" rows="3" maxlength="300"></textarea>
+          </div>
+        </div>
+        <div class="prog-field">
+          <label>圖片 URLs（每行一個）</label>
+          <textarea id="ewImages" rows="3" placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"></textarea>
+        </div>
+        <div class="prog-field">
+          <label>影音連結 Videos（YouTube / Vimeo / MP4，每行一個）</label>
+          <textarea id="ewVideos" rows="3" placeholder="https://youtube.com/watch?v=...&#10;https://vimeo.com/12345678"></textarea>
+        </div>
+        <div class="prog-field">
+          <label>附件檔案 Files（每行格式：名稱 | URL）</label>
+          <textarea id="ewFiles" rows="3" placeholder="設計稿 PDF|https://example.com/file.pdf"></textarea>
+        </div>
+        <div class="prog-field">
+          <label>標籤 Tags（逗號分隔，可留空自動產生）</label>
+          <input type="text" id="ewTags" placeholder="設計, 影像, 互動" />
+        </div>
+        <div class="prog-field">
+          <label>詳細內容 Content（HTML 可用）</label>
+          <textarea id="ewContent" rows="4" placeholder="詳細介紹…"></textarea>
+        </div>
+        <div class="prog-modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeEditWork()">取消</button>
+          <button type="submit" class="btn btn-primary">儲存變更</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="prog-modal-backdrop" id="workEditBackdrop" onclick="closeEditWork()"></div>
+
+  <!-- Login Modal -->
+  <div class="auth-modal" id="loginModal">
+    <div class="auth-modal-box">
+      <button class="auth-close" onclick="closeLoginModal()">✕</button>
+      <h2>管理員登入</h2>
+      <p class="auth-sub">Admin Login</p>
+      <form id="loginForm" autocomplete="off">
+        <div class="auth-field">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="new-password" required />
+        </div>
+        <div class="auth-field">
+          <label>密碼 Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="new-password" required />
+        </div>
+        <div id="loginError" class="auth-error"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px">登入 Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor-glow-wrap">
+    <div class="glow outer"></div>
+    <div class="glow inner"></div>
+  </div>
+
+  <script src="sanitize.js"></script>
+  <script src="jiaxin-core.js"></script>
+  <script src="loader.js"></script>
+  <script>
+  function hexRgba(hex, a) {
+    const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  const workId = new URLSearchParams(window.location.search).get('id');
+  let currentWork = null;
+  let currentCat  = null;
+
+  function initPage() {
+    if (!workId) { location.href = 'program.html'; return; }
+    currentWork = getWorks().find(w => w.id === workId);
+    if (!currentWork) { location.href = 'program.html'; return; }
+
+    const cats = getProjects();
+    currentCat = cats.find(c => c.id === currentWork.catId) || {};
+    const clr  = currentCat.color || '#00aaff';
+
+    // Breadcrumb back link
+    const bc = document.getElementById('workBreadcrumb');
+    bc.textContent = '← ' + (currentCat.title || 'Program');
+    bc.href = currentCat.id ? 'category.html?id=' + currentCat.id : 'program.html';
+
+    // Category badge
+    document.getElementById('workCatBadge').innerHTML = `
+      <span class="work-cat-dot" style="background:${clr};box-shadow:0 0 10px ${clr}"></span>
+      <span class="work-cat-name" style="color:${clr}">${currentCat.title || ''}</span>
+      ${currentCat.titleEn ? `<span class="work-cat-divider">·</span><span class="work-cat-name" style="color:var(--gray)">${currentCat.titleEn}</span>` : ''}
+    `;
+
+    // Header gradient
+    document.getElementById('workHeaderBg').style.background =
+      `radial-gradient(ellipse 75% 55% at 50% 30%, ${hexRgba(clr, 0.13)} 0%, transparent 70%)`;
+
+    document.title = currentWork.title + ' — JIAXIN';
+    document.getElementById('workTitle').textContent  = currentWork.title;
+    document.getElementById('workTitleEn').textContent = currentWork.titleEn || '';
+
+    renderBody();
+    authRefreshUI();
+  }
+
+  // ── DM Layout ─────────────────────────────────────────────────────
+  function getEmbedUrl(url) {
+    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (yt) return 'https://www.youtube.com/embed/' + yt[1] + '?rel=0';
+    const vm = url.match(/vimeo\.com\/(\d+)/);
+    if (vm) return 'https://player.vimeo.com/video/' + vm[1];
+    return null;
+  }
+
+  function renderBody() {
+    const w = currentWork;
+    let html = '';
+    let hasContent = false;
+
+    // Description (frosted glass intro)
+    if (w.desc || w.descEn) {
+      html += `<div class="dm-desc-block">
+        ${w.desc   ? `<p class="work-desc-zh">${sanitizeHTML(w.desc)}</p>`   : ''}
+        ${w.descEn ? `<p class="work-desc-en">${sanitizeHTML(w.descEn)}</p>` : ''}
+      </div>`;
+      hasContent = true;
+    }
+
+    // Images at natural ratio — alternating widths for DM feel
+    (w.images || []).forEach((url, i) => {
+      const safeImg = sanitizeURL(url);
+      if (!safeImg) return;
+      const wide  = (i % 3 === 0);
+      const style = wide ? '' : 'max-width:82%;margin-left:auto;margin-right:auto';
+      html += `<div class="dm-img-wrap" style="${style}">
+        <img src="${safeImg}" alt="${sanitizeHTML(w.title)}" loading="lazy" onclick="openLightbox('${safeImg.replace(/'/g,"\\'")}')" />
+      </div>`;
+      hasContent = true;
+    });
+
+    // Videos
+    (w.videos || []).forEach(url => {
+      const embed = getEmbedUrl(url);
+      if (embed) {
+        // embed URL 由 getEmbedUrl() 正規表達式生成，僅含安全的 youtube/vimeo 路徑
+        html += `<div class="dm-video-wrap"><iframe src="${embed}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>`;
+      } else {
+        const safeVid = sanitizeURL(url);
+        if (!safeVid) return;
+        if (/\.(mp4|webm|ogg)(\?|$)/i.test(safeVid)) {
+          html += `<div class="dm-video-wrap"><video controls src="${safeVid}"></video></div>`;
+        } else {
+          html += `<a href="${safeVid}" target="_blank" rel="noopener noreferrer" class="dm-video-link">▶ 觀看影片 Watch Video</a>`;
+        }
+      }
+      hasContent = true;
+    });
+
+    // Files
+    if ((w.files || []).length) {
+      html += `<div class="dm-files-block"><p class="dm-files-title">附件 / Attachments</p>`;
+      w.files.forEach(f => {
+        const safeHref = sanitizeURL(f.url || '');
+        if (!safeHref) return;
+        html += `<a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="dm-file-item">📎 ${sanitizeHTML(f.name)}</a>`;
+      });
+      html += `</div>`;
+      hasContent = true;
+    }
+
+    // Full HTML content（管理員可輸入 HTML，為設計功能，信任邊界在管理員登入）
+    if (w.content) {
+      html += `<div class="dm-content">${w.content}</div>`;
+      hasContent = true;
+    }
+
+    if (!hasContent) {
+      html = `<div class="work-empty"><p>尚無詳細內容 / No content yet</p>${isAdmin()?'<p style="font-size:13px;margin-top:8px;color:var(--gray)">點擊上方「編輯此作品」新增說明與圖片。</p>':''}</div>`;
+    }
+
+    document.getElementById('workDMLayout').innerHTML = html;
+  }
+
+  // ── Edit ──────────────────────────────────────────────────────────
+  // ── Lightbox ──────────────────────────────────────────────────────
+  function openLightbox(url) {
+    document.getElementById('lightboxImg').src = url;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // ── Edit ──────────────────────────────────────────────────────────
+  function openEditWork() {
+    const w = currentWork;
+    document.getElementById('ewTitle').value   = w.title   || '';
+    document.getElementById('ewTitleEn').value = w.titleEn || '';
+    document.getElementById('ewThumb').value   = w.thumb   || '';
+    document.getElementById('ewDesc').value    = w.desc    || '';
+    document.getElementById('ewDescEn').value  = w.descEn  || '';
+    document.getElementById('ewImages').value  = (w.images  || []).join('\n');
+    document.getElementById('ewVideos').value  = (w.videos  || []).join('\n');
+    document.getElementById('ewFiles').value   = (w.files   || []).map(f => f.name + '|' + f.url).join('\n');
+    document.getElementById('ewTags').value    = (w.tags    || []).join(', ');
+    document.getElementById('ewContent').value = w.content || '';
+    document.getElementById('workEditModal').classList.add('open');
+    document.getElementById('workEditBackdrop').classList.add('open');
+  }
+
+  function closeEditWork() {
+    document.getElementById('workEditModal').classList.remove('open');
+    document.getElementById('workEditBackdrop').classList.remove('open');
+  }
+
+  document.getElementById('workEditForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const tagsInput = document.getElementById('ewTags').value.trim();
+    const tagsArr   = tagsInput ? tagsInput.split(',').map(s => s.trim()).filter(Boolean) : [];
+    const data = {
+      title:   document.getElementById('ewTitle').value.trim(),
+      titleEn: document.getElementById('ewTitleEn').value.trim(),
+      thumb:   document.getElementById('ewThumb').value.trim(),
+      desc:    document.getElementById('ewDesc').value.trim(),
+      descEn:  document.getElementById('ewDescEn').value.trim(),
+      images:  document.getElementById('ewImages').value.split('\n').map(s => s.trim()).filter(Boolean),
+      videos:  document.getElementById('ewVideos').value.split('\n').map(s => s.trim()).filter(Boolean),
+      files:   parseFileList(document.getElementById('ewFiles').value),
+      content: document.getElementById('ewContent').value.trim(),
+    };
+    data.tags = tagsArr.length ? tagsArr : autoGenerateTags(data);
+    workUpdate(currentWork.id, data);
+    Object.assign(currentWork, data);
+    closeEditWork();
+    document.getElementById('workTitle').textContent   = data.title;
+    document.getElementById('workTitleEn').textContent = data.titleEn || '';
+    renderBody();
+  });
+
+  function removeWork() {
+    if (!confirm('確定要刪除這件作品嗎？此動作無法復原。')) return;
+    const catId = currentWork.catId;
+    workDelete(currentWork.id);
+    location.href = catId ? 'category.html?id=' + catId : 'program.html';
+  }
+
+  function onAuthChange() { authRefreshUI(); }
+
+  // Cursor
+  const glowOuter = document.querySelector('.glow.outer');
+  const glowInner = document.querySelector('.glow.inner');
+  let tx = window.innerWidth/2, ty = window.innerHeight/2, ox = tx, oy = ty, ix = tx, iy = ty;
+  window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  (function animCursor() {
+    ox += (tx-ox)*.08; oy += (ty-oy)*.08; ix += (tx-ix)*.16; iy += (ty-iy)*.16;
+    glowOuter.style.left = ox+'px'; glowOuter.style.top = oy+'px';
+    glowInner.style.left = ix+'px'; glowInner.style.top = iy+'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  initPage();
+  </script>
+</body>
+</html>

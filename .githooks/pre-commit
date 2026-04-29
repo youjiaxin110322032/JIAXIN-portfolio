@@ -1,0 +1,32 @@
+#!/bin/sh
+# .githooks/pre-commit
+# 在每次 git commit 前自動執行高風險套件漏洞掃描。
+# 啟用方式（只需執行一次）：npm run setup-hooks
+
+echo ""
+echo "🔍  正在執行套件安全漏洞掃描 (npm audit --audit-level=high)..."
+echo ""
+
+npm run audit:check
+
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "❌  發現高（High）或嚴重（Critical）等級漏洞，提交已中止。"
+  echo ""
+  echo "  修復選項："
+  echo "    1. npm run audit:fix        → 自動修復（不破壞相容性）"
+  echo "    2. npm audit                → 查看完整漏洞報告"
+  echo "    3. npm run audit:fix-force  → 強制升級（可能有破壞性變更，請先確認）"
+  echo ""
+  echo "  若確認漏洞不影響此專案，可用 --no-verify 跳過（不建議）："
+  echo "    git commit --no-verify -m \"your message\""
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✅  安全漏洞掃描通過，繼續提交..."
+echo ""
+exit 0

@@ -1,0 +1,60 @@
+# ── 環境變數 ──────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+
+# ── 套件目錄 ──────────────────────────────────────────────────────────
+node_modules/
+
+# ── 日誌檔 ────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── 編譯 / 建置輸出 ────────────────────────────────────────────────────
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vite/
+.cache/
+.parcel-cache/
+
+# ── 暫存檔案 ──────────────────────────────────────────────────────────
+.tmp/
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ── 作業系統產生的檔案 ─────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ── IDE / 編輯器設定 ──────────────────────────────────────────────────
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── OAuth / 服務帳號憑證 ──────────────────────────────────────────────
+credentials.json
+token.json
+service-account*.json
+*.pem
+*.key
+*.p12
