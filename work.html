@@ -165,30 +165,32 @@
   let currentWork = null;
   let currentCat  = null;
 
-  function initPage() {
+  async function initPage() {
+    await _dataReady;
     if (!workId) { location.href = 'program.html'; return; }
     currentWork = getWorks().find(w => w.id === workId);
     if (!currentWork) { location.href = 'program.html'; return; }
 
     const cats = getProjects();
     currentCat = cats.find(c => c.id === currentWork.catId) || {};
-    const clr  = currentCat.color || '#00aaff';
+    const clr     = currentCat.color || '#00aaff';
+    const safeClr = sanitizeColor(clr);
 
     // Breadcrumb back link
     const bc = document.getElementById('workBreadcrumb');
     bc.textContent = '← ' + (currentCat.title || 'Program');
     bc.href = currentCat.id ? 'category.html?id=' + currentCat.id : 'program.html';
 
-    // Category badge
+    // Category badge（sanitize 防止 CSS/HTML 注入）
     document.getElementById('workCatBadge').innerHTML = `
-      <span class="work-cat-dot" style="background:${clr};box-shadow:0 0 10px ${clr}"></span>
-      <span class="work-cat-name" style="color:${clr}">${currentCat.title || ''}</span>
-      ${currentCat.titleEn ? `<span class="work-cat-divider">·</span><span class="work-cat-name" style="color:var(--gray)">${currentCat.titleEn}</span>` : ''}
+      <span class="work-cat-dot" style="background:${safeClr};box-shadow:0 0 10px ${safeClr}"></span>
+      <span class="work-cat-name" style="color:${safeClr}">${sanitizeHTML(currentCat.title || '')}</span>
+      ${currentCat.titleEn ? `<span class="work-cat-divider">·</span><span class="work-cat-name" style="color:var(--gray)">${sanitizeHTML(currentCat.titleEn)}</span>` : ''}
     `;
 
     // Header gradient
     document.getElementById('workHeaderBg').style.background =
-      `radial-gradient(ellipse 75% 55% at 50% 30%, ${hexRgba(clr, 0.13)} 0%, transparent 70%)`;
+      `radial-gradient(ellipse 75% 55% at 50% 30%, ${hexRgba(safeClr, 0.13)} 0%, transparent 70%)`;
 
     document.title = currentWork.title + ' — JIAXIN';
     document.getElementById('workTitle').textContent  = currentWork.title;
@@ -225,8 +227,7 @@
     (w.images || []).forEach((url, i) => {
       const safeImg = sanitizeURL(url);
       if (!safeImg) return;
-      const wide  = (i % 3 === 0);
-      const style = wide ? '' : 'max-width:82%;margin-left:auto;margin-right:auto';
+      const style = '';
       html += `<div class="dm-img-wrap" style="${style}">
         <img src="${safeImg}" alt="${sanitizeHTML(w.title)}" loading="lazy" onclick="openLightbox('${safeImg.replace(/'/g,"\\'")}')" />
       </div>`;
@@ -251,13 +252,12 @@
       hasContent = true;
     });
 
-    // Files
-    if ((w.files || []).length) {
+    // Files（先過濾有效 URL，只有至少一個有效檔案時才渲染區塊）
+    const validFiles = (w.files || []).filter(f => sanitizeURL(f.url || ''));
+    if (validFiles.length) {
       html += `<div class="dm-files-block"><p class="dm-files-title">附件 / Attachments</p>`;
-      w.files.forEach(f => {
-        const safeHref = sanitizeURL(f.url || '');
-        if (!safeHref) return;
-        html += `<a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="dm-file-item">📎 ${sanitizeHTML(f.name)}</a>`;
+      validFiles.forEach(f => {
+        html += `<a href="${sanitizeURL(f.url)}" target="_blank" rel="noopener noreferrer" class="dm-file-item">📎 ${sanitizeHTML(f.name)}</a>`;
       });
       html += `</div>`;
       hasContent = true;

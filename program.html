@@ -358,8 +358,11 @@
   })();
 
   // ── Init ──────────────────────────────────────────────────────────
-  renderBubbles();
-  renderAllWorks();
+  (async () => {
+    await _dataReady;
+    renderBubbles();
+    renderAllWorks();
+  })();
   </script>
 </body>
 </html>

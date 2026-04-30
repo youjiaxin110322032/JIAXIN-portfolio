@@ -176,7 +176,8 @@
   const PAGE_SIZE  = 6;
 
   // ── Init ──────────────────────────────────────────────────────────
-  function initPage() {
+  async function initPage() {
+    await _dataReady;
     if (!catId) { location.href = 'program.html'; return; }
     const cats = getProjects();
     currentCat = cats.find(c => c.id === catId);
@@ -228,9 +229,14 @@
     }
 
     list.innerHTML = pageWorks.map(w => {
-      const tags    = (w.tags && w.tags.length) ? w.tags : autoGenerateTags(w);
-      const thumb   = sanitizeURL(w.thumb || '');
-      const desc    = sanitizeHTML(w.desc || w.descEn || '');
+      const tags       = (w.tags && w.tags.length) ? w.tags : autoGenerateTags(w);
+      const thumb      = sanitizeURL(w.thumb || '');
+      const desc       = sanitizeHTML(w.desc || w.descEn || '');
+      const validFiles = (w.files  || []).filter(f => sanitizeURL(f.url || ''));
+      const imgCount   = (w.images || []).filter(u => sanitizeURL(u)).length;
+      const vidCount   = (w.videos || []).length;
+      const hasMeta    = imgCount || vidCount || validFiles.length;
+
       return `
       <div class="work-card" onclick="location.href='work.html?id=${w.id}'" style="border-left-color:${safeClr}">
         <div class="work-thumb">
@@ -254,6 +260,15 @@
           <div class="work-glass">
             <p class="work-desc">${desc || '<span style="opacity:.4">（尚無簡介）</span>'}</p>
           </div>
+          ${hasMeta ? `
+          <div class="work-card-meta">
+            ${imgCount ? `<span class="work-card-chip">🖼 ${imgCount} 張圖</span>` : ''}
+            ${vidCount ? `<span class="work-card-chip">▶ ${vidCount} 部影片</span>` : ''}
+            ${validFiles.map(f => `
+              <a href="${sanitizeURL(f.url)}" target="_blank" rel="noopener noreferrer"
+                 class="work-card-file" onclick="event.stopPropagation()">📎 ${sanitizeHTML(f.name)}</a>
+            `).join('')}
+          </div>` : ''}
         </div>
       </div>
     `}).join('');

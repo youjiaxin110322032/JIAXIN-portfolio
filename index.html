@@ -214,10 +214,9 @@
           <div class="portfolio-carousel" id="portfolioCarousel">
             <div class="carousel-track-wrap">
               <div class="carousel-track" id="carouselTrack">
-                <!-- 預設空白佔位 -->
+                <!-- 預設展示圖（管理員未上傳時顯示品牌圖） -->
                 <div class="carousel-slide carousel-empty-slide" id="carouselEmpty">
-                  <img src="JX LOGO (1).png" alt="JIAXIN" style="width:80px;opacity:.3;margin-bottom:16px" />
-                  <p style="color:var(--gray);font-size:14px">作品集畫廊 Gallery</p>
+                  <img src="JX BRAND GUIDELINES.png" alt="JIAXIN Design Studios" />
                 </div>
               </div>
             </div>
@@ -313,87 +312,25 @@
     </div>
   </section>
 
-  <!-- ─── 用戶評價區塊：三則五星好評 ─── -->
-  <section class="testimonials" id="community">
-    <div class="container">
-      <div class="testimonials-header">
-        <span class="section-label">Member Stories</span>
-        <div class="divider" style="margin: 16px auto 24px;"></div>
-        <h2 class="section-title">What members are <em>saying</em></h2>
-      </div>
-
-      <div class="testimonials-grid">
-        <!-- 評價 1：Marcus T.，自動化潛在客戶資格審核 -->
-        <div class="testimonial-card fade-up">
-          <div class="testimonial-stars">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-          </div>
-          <p class="testimonial-text">"Within 6 weeks I automated my entire lead qualification process. What used to take 3 hours daily now runs itself. The templates and community feedback were game-changing."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">M</div>
-            <div>
-              <div class="testimonial-name">Marcus T.</div>
-              <div class="testimonial-role">Agency Owner · Singapore</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 評價 2：Sarah K.，零基礎建立內容自動化流程 -->
-        <div class="testimonial-card fade-up fade-up-delay-1">
-          <div class="testimonial-stars">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-          </div>
-          <p class="testimonial-text">"I came in knowing zero about AI. After two months, I built a full content pipeline that produces and posts every day automatically. The community is incredibly supportive."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">S</div>
-            <div>
-              <div class="testimonial-name">Sarah K.</div>
-              <div class="testimonial-role">E-commerce Founder · Australia</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 評價 3：Ravi M.，第一週即見投資報酬 -->
-        <div class="testimonial-card fade-up fade-up-delay-2">
-          <div class="testimonial-stars">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-          </div>
-          <p class="testimonial-text">"The ROI on membership was clear in week one. The agent blueprints alone saved me 200+ hours of building from scratch. This is the community serious operators need."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">R</div>
-            <div>
-              <div class="testimonial-name">Ravi M.</div>
-              <div class="testimonial-role">SaaS Operator · India</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── CTA 行動呼籲區塊：申請創始會員 ─── -->
+  <!-- ─── 電子報訂閱 CTA ─── -->
   <section class="cta-section" id="join">
     <div class="container">
       <div class="cta-card">
-        <!-- 品牌 Logo -->
         <img src="JX LOGO (1).png" alt="JIAXIN DESIGN STUDIOS" class="cta-card-logo" />
 
         <h2 class="cta-title">
-          Ready to automate<br />
-          <em>everything?</em>
+          Ready to shine<br />
+          <em>your daily life?</em>
         </h2>
         <p class="cta-desc">
-          Applications for founding membership are open. Join a community that will change how you work, think, and grow.
+          渴望在平凡中找到靈感嗎？歡迎訂閱 JIAXIN STUDIOS 電子報。<br />
+          跟我們一起把不起眼的日常過得閃耀，用心紀錄每一刻樸實的美好。
         </p>
 
-        <!-- 按鈕群組：申請連結至 mailto，次要按鈕回到功能介紹 -->
         <div class="cta-buttons">
-          <a href="mailto:abc11032203@gmail.com?subject=Membership Application - JIAXIN DESIGN STUDIOS" class="btn btn-primary btn-lg">Apply for Membership</a>
+          <a href="#contact" class="btn btn-primary btn-lg">Subscribe Now</a>
           <a href="#pillars" class="btn btn-ghost btn-lg">Learn More</a>
         </div>
-
-        <!-- 底部備注：免費申請、名額有限、全球社群 -->
-        <p class="cta-note">Free to apply · Limited founding spots available · Global community</p>
       </div>
     </div>
   </section>
@@ -546,7 +483,7 @@
         });
         dots.innerHTML = imgs.map((_,i)=>`<span class="c-dot${i===_carIdx?' active':''}" onclick="carouselGo(${i})"></span>`).join('');
       } else {
-        empty.style.display = 'flex';
+        empty.style.display = 'block';
         dots.innerHTML = '';
       }
     }
@@ -655,8 +592,9 @@
       }).join('');
     }
 
-    // Initial render on page load
-    document.addEventListener('DOMContentLoaded', () => {
+    // Initial render on page load — await _dataReady so _data.json is loaded first
+    document.addEventListener('DOMContentLoaded', async () => {
+      await _dataReady;
       _renderCarousel();
       renderFilmStrip();
       renderShowcaseOrbs();

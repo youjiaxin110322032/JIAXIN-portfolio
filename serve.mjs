@@ -1,5 +1,5 @@
 import { createServer } from 'http';
-import { readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { extname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -25,6 +25,30 @@ const mime = {
 };
 
 createServer(async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
+
+  // POST /api/sync-data → write data to _data.json for code persistence
+  if (req.method === 'POST' && req.url === '/api/sync-data') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      try {
+        JSON.parse(body); // validate JSON before writing
+        await writeFile(join(__dirname, '_data.json'), body, 'utf-8');
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end('{"ok":true}');
+      } catch {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end('{"error":"invalid JSON"}');
+      }
+    });
+    return;
+  }
+
   let url = req.url === '/' ? '/index.html' : req.url.split('?')[0];
   const filePath = join(__dirname, url);
   try {

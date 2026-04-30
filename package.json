@@ -13,5 +13,9 @@
     "audit:fix": "npm audit fix",
     "audit:fix-force": "npm audit fix --force",
     "setup-hooks": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit && echo \"Git hooks 已啟用\""
-  }
+  },
+  "dependencies": {
+    "nodemailer": "^8.0.7"
+  },
+  "devDependencies": {}
 }

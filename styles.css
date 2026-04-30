@@ -1704,8 +1704,13 @@ footer {
 }
 .carousel-empty-slide {
   width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gray); font-size: 14px; letter-spacing: 0.08em;
+  position: relative;
+  overflow: hidden;
+}
+.carousel-empty-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .carousel-btn {
   position: absolute; top: 50%; transform: translateY(-50%);
@@ -1949,6 +1954,7 @@ footer {
 .contact-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -1959,7 +1965,30 @@ footer {
 .contact-status.ok  { color: #44dd88; }
 .contact-status.err { color: #ff6655; }
 
+/* Center the description text inside .contact-header */
+.contact-header .section-desc { margin: 0 auto; }
+
 @media (max-width: 600px) {
   .contact-row { grid-template-columns: 1fr; }
   .contact-form { padding: 0 4px; }
+}
+
+/* ── Admin Settings Tabs ──────────────────────────────────────────── */
+.settings-tab {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  letter-spacing: 0.05em;
+  transition: background 0.2s, color 0.2s;
+}
+.settings-tab:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.settings-tab.active {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+  color: #fff;
 }
