@@ -1,0 +1,158 @@
+{
+  "jx_projects_v2": [
+    {
+      "id": "p1",
+      "title": "動態影音剪輯",
+      "titleEn": "Video Editing",
+      "color": "#00eedd",
+      "tags": [
+        "Video",
+        "Motion",
+        "After Effects"
+      ],
+      "images": [],
+      "content": ""
+    },
+    {
+      "id": "p2",
+      "title": "AR 擴增實境",
+      "titleEn": "Augmented Reality",
+      "color": "#0088ff",
+      "tags": [
+        "AR",
+        "Interactive",
+        "Unity"
+      ],
+      "images": [],
+      "content": ""
+    },
+    {
+      "id": "p3",
+      "title": "展場空間設計",
+      "titleEn": "Exhibition Design",
+      "color": "#7744ff",
+      "tags": [
+        "Exhibition",
+        "Spatial",
+        "Design"
+      ],
+      "images": [],
+      "content": ""
+    },
+    {
+      "id": "p4",
+      "title": "3D 建模動畫",
+      "titleEn": "3D Modeling",
+      "color": "#00aaff",
+      "tags": [
+        "3D",
+        "Blender",
+        "Animation"
+      ],
+      "images": [],
+      "content": ""
+    },
+    {
+      "id": "p5",
+      "title": "品牌識別設計",
+      "titleEn": "Brand Identity",
+      "color": "#ff44aa",
+      "tags": [
+        "Brand",
+        "Logo",
+        "Identity"
+      ],
+      "images": [],
+      "content": ""
+    },
+    {
+      "id": "p6",
+      "title": "包裝平面設計",
+      "titleEn": "Graphic Design",
+      "color": "#44dd88",
+      "tags": [
+        "Graphic",
+        "Print",
+        "Packaging"
+      ],
+      "images": [],
+      "content": ""
+    }
+  ],
+  "jx_works_v1": [
+    {
+      "id": "w1777365873322",
+      "catId": "p2",
+      "title": "AR擴增實境互動繪本 | 巴倫星球有一個願望",
+      "titleEn": "AR Interactive Picture Book | Baron Planet's Wish",
+      "thumb": "https://scontent.ftpe8-1.fna.fbcdn.net/v/t39.30808-6/683901474_1422721266535790_1669889940139068470_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=7OTepzd5WHsQ7kNvwHqO580&_nc_oc=Adqo589ehu91LS_8fOEtmSOGLTDj9TU1K5fNU4ELLw4RwG0SRELs7r_uB0b6DXqKHM4&_nc_zt=23&_nc_ht=scontent.ftpe8-1.fna&_nc_gid=eI9iybZM4UbsmXmJH6DxqA&_nc_ss=7b2a8&oh=00_Af0JOhg9RuWxABPRWAm5qa0LBYrxuYkRPBUIZL482yPyMg&oe=69F63D41",
+      "desc": "繪本搭配 AR,以簡易 APP 為媒介,透過手機掃描繪本,2D、3D 畫面與繪本 以垂直舞台劇形式呈現,結合光影與音效,出現卡牌供讀者選擇,導出不同故 事結局,一共八組 AR 特效,以增添讀者樂趣,豐富視覺效果供觀看者選擇。",
+      "descEn": "Pairing the picture book with AR via a user-friendly app, readers can scan the pages with their smartphones to bring 2D and 3D visuals to life in a vertical stage-play format. Combined with dynamic lighting and sound effects, interactive cards appear for readers to choose from, leading to multiple s",
+      "images": [
+        "https://scontent.ftpe8-4.fna.fbcdn.net/v/t39.30808-6/682237429_1422721223202461_4649040845660250560_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=Oo_nKOGr8D0Q7kNvwF_MQbr&_nc_oc=AdoNRNG_ZIEXJjKis_Wpil9TYTt15I541nq0fB1aQokSp53q606nrKfYFHSpU1IuVXM&_nc_zt=23&_nc_ht=scontent.ftpe8-4.fna&_nc_gid=Z9Z76kxucjAb5zdhQ3kYzA&_nc_ss=7b2a8&oh=00_Af2wtyoPKd4jCIrc2f7wAWFy42iyKaIh9UA0laeIBv0N2g&oe=69F63A49",
+        "https://scontent.ftpe8-2.fna.fbcdn.net/v/t39.30808-6/680772756_1422721269869123_6380170753661705113_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=chwdV3HpbwAQ7kNvwEm0etU&_nc_oc=Adq1m25Un7-mJjVliqo6SExPmAnvK7pGKmXikpQ7H7d-gVhdiw7iifiLNTNNIf4MtZU&_nc_zt=23&_nc_ht=scontent.ftpe8-2.fna&_nc_gid=4dVDSPJ-vXHTGQZNqmSFOA&_nc_ss=7b2a8&oh=00_Af3w4HypxJHG2B-aByJ-Xs3QBB8zqOyTDegSTlnWEPERmw&oe=69F63E12",
+        "https://scontent.ftpe8-4.fna.fbcdn.net/v/t39.30808-6/682830810_1422721193202464_8144915359774102795_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=PrWC4p5YxKUQ7kNvwE9UKr2&_nc_oc=AdrxyXJ29H4hn9MjVFDnnp0NJg_mFtjJNQbMVVwuIJ6Ek7yK0BholjEqtuWUCbbyOdw&_nc_zt=23&_nc_ht=scontent.ftpe8-4.fna&_nc_gid=_cOPfhPyMYIY8GopOK8FTw&_nc_ss=7b2a8&oh=00_Af3eBcpIsMkAW0I3SASbERdPaIUBmmT0DzwEC_yw1Lpj0w&oe=69F65356",
+        "https://scontent.ftpe8-4.fna.fbcdn.net/v/t39.30808-6/679287754_1422721126535804_4938203560044054678_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=UqkIUKH9oscQ7kNvwHqmuHO&_nc_oc=AdoSc9cClro9B7TpqgcQNs3ygaufrFTzkthkBFKUlPasF7ZQ9Vxz13yZh6jla5PSyZs&_nc_zt=23&_nc_ht=scontent.ftpe8-4.fna&_nc_gid=S2ySVGU4Hc6S5A7fAOHtxQ&_nc_ss=7b2a8&oh=00_Af3Eowzg5B6tlLGz_Oh_qeQkHcru38U8nyMd1vQJuBy8Gg&oe=69F628E0",
+        "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/680451360_1422720999869150_1087485158073121271_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=c1Wa133uis0Q7kNvwFzgGER&_nc_oc=AdpS78S_cLe5aYRwxRJuRxtdBKtPbSsjhNr90eEq2phVajLPpOUpXeAGf1rZJ0xrpbo&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=kKHpmIeAp_KTLUT7SDHtcA&_nc_ss=7b2a8&oh=00_Af2-rsIWjH0jKRdF20NsM1zMRNO-2StOW1XiJGOL5_Ji9A&oe=69F642F6"
+      ],
+      "content": "一、繪本內頁使用軟體Adobe Photoshop、Clip Studio Paint繪製，並使用軟體Adobe Illustrator 校稿編排，其中會加入立體書元素。\n二、軟體 AR製作軟體：Unity製作擴增實境特效、Vuforia、Gihub、AI技術、Styly。AR部分會放在APP上，先用Ａndroid製作軟體，測驗成功再轉換至IOS系統。 在內頁添加小圖標提供讀者掃描出現AR擴增實境，以簡易APP為媒介，透過手機掃描繪本，2D、3D畫面與繪本以垂直舞台劇形式呈現，結合光影與音效，出現卡牌供讀者選擇，導出不同故事結局，一共八組AR特效，以增添讀者樂趣，豐富視覺效果供觀看者選擇。"
+    },
+    {
+      "id": "w1777369580091",
+      "catId": "p6",
+      "title": "潮塑新生：海廢再生藝術展",
+      "titleEn": "Tidal Rebirth: Marine Debris Upcycled Art Exhibition",
+      "thumb": "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/490142618_688174537197776_6527286169721245279_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=zIR6yq6KHkEQ7kNvwEqVHoo&_nc_oc=AdrvlpeNqzuRxOEdO323MSN83Z2U9lYSsNcmUlTndXxBdopKNVOg51IrKe16qQecif4&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=EtBq95HOAmLf_LLSe7yt_A&_nc_ss=7b2a8&oh=00_Af3UnOyTFKIU5d5eHW_5fu3RdNxWWN3qfNUUPdp7VJRKWg&oe=69F6632F",
+      "desc": "從台北赤峰街打鐵與船零件的歷史記憶出發，將海洋廢棄物轉化為永續藝術。本次展覽結合實體海廢雕塑與互動式沉浸空間，重新定義廢棄物的價值，透過藝術與科技的結合，喚醒大眾對蔚藍星球的守護意識。",
+      "descEn": "Rooted in the historical memory of blacksmithing and ship parts in Taipei's Chifeng Street, this project transforms marine debris into sustainable art. By integrating physical marine waste sculptures with interactive immersive spaces, the exhibition redefines the value of discarded materials.",
+      "images": [
+        "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/490142618_688174537197776_6527286169721245279_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=zIR6yq6KHkEQ7kNvwEqVHoo&_nc_oc=AdrvlpeNqzuRxOEdO323MSN83Z2U9lYSsNcmUlTndXxBdopKNVOg51IrKe16qQecif4&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=EtBq95HOAmLf_LLSe7yt_A&_nc_ss=7b2a8&oh=00_Af3UnOyTFKIU5d5eHW_5fu3RdNxWWN3qfNUUPdp7VJRKWg&oe=69F6632F"
+      ],
+      "content": ""
+    },
+    {
+      "id": "w1777567168415",
+      "catId": "p1",
+      "title": "旭榮集團 × 2024 台北紡織展 TITAS｜AI 互動拍貼體驗影片剪輯",
+      "titleEn": "2024 Taipei Innovative Textile Application Show (TITAS) Video Editing",
+      "thumb": "https://scontent.ftpe20-1.fna.fbcdn.net/v/t39.30808-6/685918685_1255373806810192_7426599761756827193_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=gfvyWBqg1wgQ7kNvwF5TulW&_nc_oc=Adru1lsEUTgamazBrJ3Hlevdrggyn0IumEvbnsBLAz7sPxC7qAvk7EkbCVFlUY00gmO7vpNinOKUhzViB9SIREXP&_nc_zt=23&_nc_ht=scontent.ftpe20-1.fna&_nc_gid=jWgZwEij4TCm0DDIWjiG3g&_nc_ss=7b2a8&oh=00_Af0byo4LVhfcV9Cj4TDpjFd0huKCRP6BLTpvuXYopp1kvQ&oe=69F9474C",
+      "desc": "旭榮集團 × 2024 台北紡織展 TITAS｜AI 互動拍貼體驗影片剪輯",
+      "descEn": "2024 Taipei Innovative Textile Application Show (TITAS) Video Editing",
+      "tags": [
+        "數位行銷",
+        "互動設計",
+        "線上遊戲"
+      ],
+      "videos": [
+        "https://youtu.be/gVX7apTTvbY?si=BHIPZrRscIeiNplF"
+      ],
+      "files": [],
+      "images": [],
+      "content": "旭榮集團 × 2024 台北紡織展 TITAS｜AI 互動拍貼體驗"
+    },
+    {
+      "id": "w1777567803991",
+      "catId": "p1",
+      "title": "Meet Taipei 2024 × 雲市集 Tcloud 創新未來館｜展場影音剪輯",
+      "titleEn": "Meet Taipei 2024 × Tcloud Future Innovation Pavilion | Exhibition Video Editing",
+      "thumb": "https://scontent.ftpe20-2.fna.fbcdn.net/v/t39.30808-6/683638297_1255382480142658_226287236121513559_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=DRofPIyCbZ8Q7kNvwGClnnj&_nc_oc=AdrsoJ-5Ds096FHn7G6qea20cDEDwqJkIIBKG0AN2L6flFlk-hv-5yf31_jCF1Ms3h8wSO8zL2LBEeorY3GKWMAR&_nc_zt=23&_nc_ht=scontent.ftpe20-2.fna&_nc_gid=xUA_3MtwjZEX6qmqjHYCUg&_nc_ss=7b2a8&oh=00_Af1Rc6PJobmTpR--IMsJ0e3cyvvjop1nQtU6CYQOs-j9iQ&oe=69F969EF",
+      "desc": "體驗最新 AI 拍貼機科技，就在 2024 Meet Taipei 雲市集 Tcloud 攤位，拍攝專屬 AI 數位分身並即時生成個人化拍貼。透過生成式 AI 帶來前所未有的互動樂趣，輕鬆分享與收藏活動回憶！",
+      "descEn": "Experience the latest AI photo booth technology at the Tcloud booth at Meet Taipei 2024! Capture your exclusive AI digital avatar and instantly generate personalized photo prints. Powered by generative AI, it offers unprecedented interactive fun, making it easy to share and collect your event memori",
+      "tags": [
+        "影片製作",
+        "數位行銷",
+        "互動設計"
+      ],
+      "videos": [
+        "https://youtu.be/_ib89xMvHBc?si=QeZ3IOIpQuJntlq6"
+      ],
+      "files": [],
+      "images": [],
+      "content": ""
+    }
+  ],
+  "jx_carousel_v1": [
+    "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/680492860_1253388340342072_1371082565753968645_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_ohc=enxl_GNXnUYQ7kNvwH3BvLN&_nc_oc=AdqgeRSiGUENa8GsNrWP_vvYM0H9O3E4Ulsf1ltKUiZJCIVOTOx61y5mPP1nHmXZfCU&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=30mIUqnUu8cNlbGrFJ6LVg&_nc_ss=7b2a8&oh=00_Af1BYma5P2Ea_kC2yF_TPh4mAxmiCJg5CZYsyau9WctQrA&oe=69F640E1",
+    "https://scontent.ftpe20-2.fna.fbcdn.net/v/t39.30808-6/679287754_1422721126535804_4938203560044054678_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=q6N4379H6YsQ7kNvwGfbJ6m&_nc_oc=AdptmlB47yjBDzssKKgVw5QpJnNM3elg741bQOyT-k903L2ZjhsztllIyFxU9kQYWPsfMqmuFg0RWjOuIih3TCYC&_nc_zt=23&_nc_ht=scontent.ftpe20-2.fna&_nc_gid=bEQ1YuqyNMXWY5o8_ZJVqg&_nc_ss=7b2a8&oh=00_Af3uhmHdsP0TRYbVPhs_9ToYKTi3MtY9WyfyRoQK2JNiRw&oe=69F77A60"
+  ]
+}
