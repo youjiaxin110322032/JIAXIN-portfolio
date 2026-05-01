@@ -81,37 +81,7 @@
   ],
   "jx_works_v1": [
     {
-      "id": "w1777365873322",
-      "catId": "p2",
-      "title": "AR擴增實境互動繪本 | 巴倫星球有一個願望",
-      "titleEn": "AR Interactive Picture Book | Baron Planet's Wish",
-      "thumb": "https://scontent.ftpe8-1.fna.fbcdn.net/v/t39.30808-6/683901474_1422721266535790_1669889940139068470_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=7OTepzd5WHsQ7kNvwHqO580&_nc_oc=Adqo589ehu91LS_8fOEtmSOGLTDj9TU1K5fNU4ELLw4RwG0SRELs7r_uB0b6DXqKHM4&_nc_zt=23&_nc_ht=scontent.ftpe8-1.fna&_nc_gid=eI9iybZM4UbsmXmJH6DxqA&_nc_ss=7b2a8&oh=00_Af0JOhg9RuWxABPRWAm5qa0LBYrxuYkRPBUIZL482yPyMg&oe=69F63D41",
-      "desc": "繪本搭配 AR,以簡易 APP 為媒介,透過手機掃描繪本,2D、3D 畫面與繪本 以垂直舞台劇形式呈現,結合光影與音效,出現卡牌供讀者選擇,導出不同故 事結局,一共八組 AR 特效,以增添讀者樂趣,豐富視覺效果供觀看者選擇。",
-      "descEn": "Pairing the picture book with AR via a user-friendly app, readers can scan the pages with their smartphones to bring 2D and 3D visuals to life in a vertical stage-play format. Combined with dynamic lighting and sound effects, interactive cards appear for readers to choose from, leading to multiple s",
-      "images": [
-        "https://scontent.ftpe8-4.fna.fbcdn.net/v/t39.30808-6/682237429_1422721223202461_4649040845660250560_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=Oo_nKOGr8D0Q7kNvwF_MQbr&_nc_oc=AdoNRNG_ZIEXJjKis_Wpil9TYTt15I541nq0fB1aQokSp53q606nrKfYFHSpU1IuVXM&_nc_zt=23&_nc_ht=scontent.ftpe8-4.fna&_nc_gid=Z9Z76kxucjAb5zdhQ3kYzA&_nc_ss=7b2a8&oh=00_Af2wtyoPKd4jCIrc2f7wAWFy42iyKaIh9UA0laeIBv0N2g&oe=69F63A49",
-        "https://scontent.ftpe8-2.fna.fbcdn.net/v/t39.30808-6/680772756_1422721269869123_6380170753661705113_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=chwdV3HpbwAQ7kNvwEm0etU&_nc_oc=Adq1m25Un7-mJjVliqo6SExPmAnvK7pGKmXikpQ7H7d-gVhdiw7iifiLNTNNIf4MtZU&_nc_zt=23&_nc_ht=scontent.ftpe8-2.fna&_nc_gid=4dVDSPJ-vXHTGQZNqmSFOA&_nc_ss=7b2a8&oh=00_Af3w4HypxJHG2B-aByJ-Xs3QBB8zqOyTDegSTlnWEPERmw&oe=69F63E12",
-        "https://scontent.ftpe8-4.fna.fbcdn.net/v/t39.30808-6/682830810_1422721193202464_8144915359774102795_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=PrWC4p5YxKUQ7kNvwE9UKr2&_nc_oc=AdrxyXJ29H4hn9MjVFDnnp0NJg_mFtjJNQbMVVwuIJ6Ek7yK0BholjEqtuWUCbbyOdw&_nc_zt=23&_nc_ht=scontent.ftpe8-4.fna&_nc_gid=_cOPfhPyMYIY8GopOK8FTw&_nc_ss=7b2a8&oh=00_Af3eBcpIsMkAW0I3SASbERdPaIUBmmT0DzwEC_yw1Lpj0w&oe=69F65356",
-        "https://scontent.ftpe8-4.fna.fbcdn.net/v/t39.30808-6/679287754_1422721126535804_4938203560044054678_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=UqkIUKH9oscQ7kNvwHqmuHO&_nc_oc=AdoSc9cClro9B7TpqgcQNs3ygaufrFTzkthkBFKUlPasF7ZQ9Vxz13yZh6jla5PSyZs&_nc_zt=23&_nc_ht=scontent.ftpe8-4.fna&_nc_gid=S2ySVGU4Hc6S5A7fAOHtxQ&_nc_ss=7b2a8&oh=00_Af3Eowzg5B6tlLGz_Oh_qeQkHcru38U8nyMd1vQJuBy8Gg&oe=69F628E0",
-        "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/680451360_1422720999869150_1087485158073121271_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=c1Wa133uis0Q7kNvwFzgGER&_nc_oc=AdpS78S_cLe5aYRwxRJuRxtdBKtPbSsjhNr90eEq2phVajLPpOUpXeAGf1rZJ0xrpbo&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=kKHpmIeAp_KTLUT7SDHtcA&_nc_ss=7b2a8&oh=00_Af2-rsIWjH0jKRdF20NsM1zMRNO-2StOW1XiJGOL5_Ji9A&oe=69F642F6"
-      ],
-      "content": "一、繪本內頁使用軟體Adobe Photoshop、Clip Studio Paint繪製，並使用軟體Adobe Illustrator 校稿編排，其中會加入立體書元素。\n二、軟體 AR製作軟體：Unity製作擴增實境特效、Vuforia、Gihub、AI技術、Styly。AR部分會放在APP上，先用Ａndroid製作軟體，測驗成功再轉換至IOS系統。 在內頁添加小圖標提供讀者掃描出現AR擴增實境，以簡易APP為媒介，透過手機掃描繪本，2D、3D畫面與繪本以垂直舞台劇形式呈現，結合光影與音效，出現卡牌供讀者選擇，導出不同故事結局，一共八組AR特效，以增添讀者樂趣，豐富視覺效果供觀看者選擇。"
-    },
-    {
-      "id": "w1777369580091",
-      "catId": "p6",
-      "title": "潮塑新生：海廢再生藝術展",
-      "titleEn": "Tidal Rebirth: Marine Debris Upcycled Art Exhibition",
-      "thumb": "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/490142618_688174537197776_6527286169721245279_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=zIR6yq6KHkEQ7kNvwEqVHoo&_nc_oc=AdrvlpeNqzuRxOEdO323MSN83Z2U9lYSsNcmUlTndXxBdopKNVOg51IrKe16qQecif4&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=EtBq95HOAmLf_LLSe7yt_A&_nc_ss=7b2a8&oh=00_Af3UnOyTFKIU5d5eHW_5fu3RdNxWWN3qfNUUPdp7VJRKWg&oe=69F6632F",
-      "desc": "從台北赤峰街打鐵與船零件的歷史記憶出發，將海洋廢棄物轉化為永續藝術。本次展覽結合實體海廢雕塑與互動式沉浸空間，重新定義廢棄物的價值，透過藝術與科技的結合，喚醒大眾對蔚藍星球的守護意識。",
-      "descEn": "Rooted in the historical memory of blacksmithing and ship parts in Taipei's Chifeng Street, this project transforms marine debris into sustainable art. By integrating physical marine waste sculptures with interactive immersive spaces, the exhibition redefines the value of discarded materials.",
-      "images": [
-        "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/490142618_688174537197776_6527286169721245279_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=zIR6yq6KHkEQ7kNvwEqVHoo&_nc_oc=AdrvlpeNqzuRxOEdO323MSN83Z2U9lYSsNcmUlTndXxBdopKNVOg51IrKe16qQecif4&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=EtBq95HOAmLf_LLSe7yt_A&_nc_ss=7b2a8&oh=00_Af3UnOyTFKIU5d5eHW_5fu3RdNxWWN3qfNUUPdp7VJRKWg&oe=69F6632F"
-      ],
-      "content": ""
-    },
-    {
-      "id": "w1777567168415",
+      "id": "w1777568069152",
       "catId": "p1",
       "title": "旭榮集團 × 2024 台北紡織展 TITAS｜AI 互動拍貼體驗影片剪輯",
       "titleEn": "2024 Taipei Innovative Textile Application Show (TITAS) Video Editing",
@@ -119,40 +89,135 @@
       "desc": "旭榮集團 × 2024 台北紡織展 TITAS｜AI 互動拍貼體驗影片剪輯",
       "descEn": "2024 Taipei Innovative Textile Application Show (TITAS) Video Editing",
       "tags": [
-        "數位行銷",
-        "互動設計",
-        "線上遊戲"
+        "數位行銷 互動設計 影音剪輯"
       ],
       "videos": [
-        "https://youtu.be/gVX7apTTvbY?si=BHIPZrRscIeiNplF"
+        "https://youtu.be/gVX7apTTvbY?si=LnTUinz_t1i3b6Nb"
       ],
       "files": [],
       "images": [],
-      "content": "旭榮集團 × 2024 台北紡織展 TITAS｜AI 互動拍貼體驗"
+      "content": ""
     },
     {
-      "id": "w1777567803991",
+      "id": "w1777568328755",
       "catId": "p1",
       "title": "Meet Taipei 2024 × 雲市集 Tcloud 創新未來館｜展場影音剪輯",
       "titleEn": "Meet Taipei 2024 × Tcloud Future Innovation Pavilion | Exhibition Video Editing",
       "thumb": "https://scontent.ftpe20-2.fna.fbcdn.net/v/t39.30808-6/683638297_1255382480142658_226287236121513559_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=DRofPIyCbZ8Q7kNvwGClnnj&_nc_oc=AdrsoJ-5Ds096FHn7G6qea20cDEDwqJkIIBKG0AN2L6flFlk-hv-5yf31_jCF1Ms3h8wSO8zL2LBEeorY3GKWMAR&_nc_zt=23&_nc_ht=scontent.ftpe20-2.fna&_nc_gid=xUA_3MtwjZEX6qmqjHYCUg&_nc_ss=7b2a8&oh=00_Af1Rc6PJobmTpR--IMsJ0e3cyvvjop1nQtU6CYQOs-j9iQ&oe=69F969EF",
       "desc": "體驗最新 AI 拍貼機科技，就在 2024 Meet Taipei 雲市集 Tcloud 攤位，拍攝專屬 AI 數位分身並即時生成個人化拍貼。透過生成式 AI 帶來前所未有的互動樂趣，輕鬆分享與收藏活動回憶！",
-      "descEn": "Experience the latest AI photo booth technology at the Tcloud booth at Meet Taipei 2024! Capture your exclusive AI digital avatar and instantly generate personalized photo prints. Powered by generative AI, it offers unprecedented interactive fun, making it easy to share and collect your event memori",
+      "descEn": "Experience the latest AI photo booth technology at the Tcloud booth at Meet Taipei 2024! Capture your exclusive AI digital avatar and instantly generate personalized photo prints. Powered by generative AI, it offers unprecedented interactive fun, making it easy to share your event memories!",
       "tags": [
         "影片製作",
         "數位行銷",
         "互動設計"
       ],
       "videos": [
-        "https://youtu.be/_ib89xMvHBc?si=QeZ3IOIpQuJntlq6"
+        "https://youtu.be/_ib89xMvHBc?si=7xrsnlwGZieoWGA8"
       ],
       "files": [],
       "images": [],
       "content": ""
+    },
+    {
+      "id": "w1777599039384",
+      "catId": "p1",
+      "title": "2024TSAPS台灣美容外科醫學會",
+      "titleEn": "2024 Taiwan Society of Aesthetic Plastic Surgery (TSAPS)",
+      "thumb": "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/682457618_1255641970116709_5037126693419868055_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=Pdhg67vLTFkQ7kNvwGXl5cq&_nc_oc=Adrp-H35728yHXNRMsQ5mqLQnu9rnLrOdWERZMN4sifC5lDE39eRbugtjKuuQVBCKa8cLRttPn2O9_0AxK2YqiEc&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=pzaPlT2vYW8ZN2b35q4GYA&_nc_ss=7b2a8&oh=00_Af6fzkWS8CbyhS9U-FF3b4LtS6-9EWswSGbB4O8P2wHWGw&oe=69F9DFE8",
+      "desc": "2024TSAPS台灣美容外科醫學會",
+      "descEn": "2024 Taiwan Society of Aesthetic Plastic Surgery (TSAPS)",
+      "tags": [
+        "Taiwan",
+        "Society",
+        "Aesthetic"
+      ],
+      "videos": [
+        "https://youtu.be/Q4XxkhRutlE?si=zqwMRa1zmGzEPQQi"
+      ],
+      "files": [],
+      "images": [],
+      "content": ""
+    },
+    {
+      "id": "w1777650216006",
+      "catId": "p1",
+      "title": "台灣藝想劇團-國風四戰士與機甲戰士",
+      "titleEn": "Taiwan Yixiang Theater: The Four Oriental Warriors & Mecha Warriors",
+      "thumb": "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/481796509_1051129540375275_3899437725837937096_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=b895b5&_nc_ohc=KCj0OhVq3z0Q7kNvwEnWS1w&_nc_oc=AdqkDmhrfgQHACLBjT1MS0vNNfwnmB3jdi3XUtJwI4OOAuFrV33Kw-t5fSducq0Su_gGo_rNGzWh4mJpFgwIfXtv&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=Yxu_8Qztn-z0AxKWKNxFVA&_nc_ss=7b2a8&oh=00_Af6BdqxIvrInQo1k-foGfmYNy-ZPZ0i1pEplsU3uVEgmNw&oe=69FAB398",
+      "desc": "師傅俺來也！\n如來佛祖玉皇大帝觀音菩薩指定取西經特派使者花果山水濂洞美猴王齊天大聖孫悟空啊～\n帥到掉渣！\n#正能量\n#新機甲戰神\n＃信義街新庄仔福德祠 \n#藝想台灣劇團",
+      "descEn": "Master, I'm here! The one and only envoy chosen by the Heavens for the Journey to the West. The Handsome Monkey King of Flower Fruit Mountain, the Great Sage Equal to Heaven—Sun Wukong! 🐒\nCool beyond words!",
+      "tags": [
+        "#PositiveVibes #PositiveEnergy #NewMechaWarrior #XinzhuangziFudeTemple #TaiwanYixiangTheater #SunWukong #MonkeyKing"
+      ],
+      "videos": [
+        "https://youtu.be/4NRL-k72vD0",
+        "https://youtu.be/ECH42kNCqaQ?si=nfvdwWdllCrH4G4A"
+      ],
+      "files": [],
+      "images": [
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/686077078_1256186986728874_9125031549338220169_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=G3O5L4Ghz3wQ7kNvwHD0Bez&_nc_oc=AdrV8JU0ZWGQn_Kb07OvegFiGYMjh-tRj04RnzsmKvMKu0BIVo8DfBw2ulmnTBLyRjlSdrNQiN9Cul9MSLVBl7yK&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=KmGi-W9a_TSucSz_D9nOaA&_nc_ss=7b2a8&oh=00_Af6KLPoVtyNcCC2-bTaPMgVONEmxSg4boYV_aIy6tOpAxA&oe=69FA978F",
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/687033490_1256186933395546_5220368005274105405_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=iqPkPNERXFkQ7kNvwGYiqED&_nc_oc=Adr2uCu7DJ2GNuo-rUgvfJ1NME_8osmqFdSPWDPbI0TPC29Hes3khhwcQ4nAKmjx1C7ukn_JPcpzpj7EWVMccgH8&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=p_jZeL3iHtbgcoS2vnRYkg&_nc_ss=7b2a8&oh=00_Af4X9eGsRdypy_H5oePgguEzeYO3k6D3yl9zcWnOk4IEbA&oe=69FAA032"
+      ],
+      "content": ""
+    },
+    {
+      "id": "w1777650546422",
+      "catId": "p1",
+      "title": "台灣藝想劇團 | 臺北兒童新樂園【噶瑪蘭公主】",
+      "titleEn": "Taiwan Yixiang Theater | Taipei Children's Amusement Park: [Princess Kavalan]",
+      "thumb": "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/481996331_1055276633293899_8067690978691792226_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=Wwhd2PCF5AoQ7kNvwG24gnn&_nc_oc=Adpy3TIWGGT-OkRbq9GMXz7UTDu6vUkZLHFV4ztbM9Z0Evs0f0FcCED3VizlCtRsB54nOnORr2xI4CYI6TCdqffv&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=ONfkKj_8xE0snuqffp4GTQ&_nc_ss=7b2a8&oh=00_Af4WURJqy_rPZ0VNeB21qJymgXR2Jj8xM9-jM6QNgFBXxw&oe=69FA876A",
+      "desc": "「噶瑪蘭公主」是宜蘭最雋永的愛情故事！\n描述海龍王女兒噶瑪蘭公主，\n與海龍王部下龜將軍相愛未獲同意，\n2人相約私奔時遭重兵追捕，龜將軍力竭戰死化為龜山島，\n噶瑪蘭公主悲傷過度，躺在岸上成了蘭陽平原，\n彼此隔著大海遙遙相望，淒美情節被人傳頌至今。",
+      "descEn": "A forbidden romance that shaped Yilan: The fallen Turtle General became Guishan Island, and the grieving Princess Kavalan became the Lanyang Plain—forever separated by the sea.",
+      "tags": [
+        "#藝想台灣 #噶瑪蘭公主 #龜將軍 #臺北 #士林 #兒童新樂園 #氣墊遊戲區"
+      ],
+      "videos": [],
+      "files": [],
+      "images": [
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/481996331_1055276633293899_8067690978691792226_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=Wwhd2PCF5AoQ7kNvwG24gnn&_nc_oc=Adpy3TIWGGT-OkRbq9GMXz7UTDu6vUkZLHFV4ztbM9Z0Evs0f0FcCED3VizlCtRsB54nOnORr2xI4CYI6TCdqffv&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=nVNEew1Qrpwm5tXYzxuDKg&_nc_ss=7b2a8&oh=00_Af7CtceRYhBgDltYNQ-j7x-V21KQv_bJdsdQgw4CGyuMjA&oe=69FA876A",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/482002035_1055276683293894_5684032741950499156_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=8paT6TtzKGsQ7kNvwFAq_Cd&_nc_oc=Ado_LcacfAlprlE8NNrzVM8R5vz1TiJEv8_hcIBW5iNLf9GZ7WeEfi3v49qUl4iVUWDhTEC6KHaH-bgsjOJTmjIh&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=jPC9Ueu3wQlbR_4erwm-vA&_nc_ss=7b2a8&oh=00_Af6x6nk9shgxDN23WoB1EtL1TqsTvMtPoLSv7N_0JaZHYg&oe=69FA94BD",
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/482029409_1055276646627231_2246773923101051222_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_ohc=DDqqko-K3F4Q7kNvwFQh2ue&_nc_oc=AdqmcdfIHecaYJTpI7dOKoDjuqyWfERih1wMuiDNKRBJmIqXRMrlMMeMvvDPt6HM9_TwI6Q_pr21hMhzsTsTAHso&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=efCCtZi_12OGNtxnBwXkHw&_nc_ss=7b2a8&oh=00_Af4z9KbZjz-ONfuTRxhmdZG3AKfoop_q75LbN1Nmxeosvw&oe=69FA8E0F",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/482016885_1055276239960605_1641966581032283906_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_ohc=KA9L6G7VB_YQ7kNvwHaKFU_&_nc_oc=AdpOEFMCRhPGS6R12ElvEtl1H0JQbiHi_A22SndvlSTWWSe97VrY6m0wkSls03Ued1zD4XQt8wACpQbmk2WIdDeT&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=f2OSkZopfWxGZjgxAjhotQ&_nc_ss=7b2a8&oh=00_Af5iWRJHysa4blvgINHBiXtBNJRuwu7GnCA5QgA6azG4-Q&oe=69FAA727",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/482003117_1055276339960595_5147169548417385880_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=1y0_7oVzh7cQ7kNvwFWed8G&_nc_oc=Ado90tOswpg1as1yZLSmTHQyXfLXii2nEL8Y1ftS6BzpVj5YT5Gjt7BL3wAGFEaz9256iK8dVfvwLAiAcM6s1V4w&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=RPtc1_MdL3VCdvwrIDkJgg&_nc_ss=7b2a8&oh=00_Af4cBcHWCrbpdOrgWMPAS3dHWrluGD-HDXwyyPQcTXjGfA&oe=69FA9A40",
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/482015758_1055276649960564_9004663233915958708_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_ohc=ZOyntSsaGZYQ7kNvwEW8mSu&_nc_oc=Adok4sZmwe0-se0FvibcDcRRscpS7nYlQl74bdmU2hheXoI6D-3avk5XmUgG81L2Neu3ovj2Nd5CQFw9c2IvVDqH&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=Xb6muERv9BeCtEKz-takAA&_nc_ss=7b2a8&oh=00_Af5Gkzmqx-474STr-yYN52NE0HICg9xZkP1IGUMU25_PDA&oe=69FA811E",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/481962649_1055276686627227_3913224855959574913_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=RQPMeelMxgIQ7kNvwELa7np&_nc_oc=AdoCjdmjFcx4Cn9giatzg7jXjRufloZRWp6h2zsQeBCbDxygTT5Usb_sk4AWxHEX0BFZfocfQe0WCP67E9KYsd37&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=8KwpM3pT6UsljUUpf7aLkA&_nc_ss=7b2a8&oh=00_Af5uRqxnmWisD0DixilcQQNdeUYsmw280eGkwaLiAm4zVg&oe=69FA977B",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/481957195_1055276636627232_3767234484484424669_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=P2zWPP8_k4YQ7kNvwETg98R&_nc_oc=AdqsHCB_9jFVuo5O6WOUXAL6qYIAPHxdYb7tx7AkYtsVXYbFqsEvOzpktAezATas8HYRB_I17NytVjnJQyDESZvP&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=5AMxJ5kA78jUqj8pKZfqAg&_nc_ss=7b2a8&oh=00_Af4eQywcmAaeesYLlz3kpbzd419LT6eZ4Amqd1taFfgPzw&oe=69FA9469",
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/482011932_1055276659960563_3403615294129544971_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=YiXqEC4YF2EQ7kNvwGB7HYS&_nc_oc=Adr00EZSeMplkB-FG2Mrz-h4xHCe_aOdcG_YO47AL2LhTBortEMM6zbkSQNJ8H2bbU9inIkPVPvs20FbwFzCqKMl&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=dfL1A30cD2N3BQroIl5Pwg&_nc_ss=7b2a8&oh=00_Af62mKSX9aqexOAULrO7gOyhPbqr9qecf05qimh7IGCRhQ&oe=69FA8420"
+      ],
+      "content": ""
+    },
+    {
+      "id": "w1777652248305",
+      "catId": "p1",
+      "title": "溫州浙江工貿x致理科技大學2024夏令營交流紀錄",
+      "titleEn": "2024 Wenzhou x Chihlee Summer Camp: Exchange Highlights",
+      "thumb": "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/686727685_1256201480060758_4373552687472060710_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=9BUNP9IPTZIQ7kNvwEh-XNl&_nc_oc=AdrAbxKUSh4yQwlEF-vll-mCdUns1VKlAlWqgBRyaJWcdAhusYabFel1OPPUFeIOpZyeA1raOdTcHeQCJO5t8VgQ&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=ZTb_KNzeFTmavs-a-fj_nQ&_nc_ss=7b2a8&oh=00_Af4x4s-upUE5tzJ07FFVVW_VazTs-HrPmbCzn9DQbkLMeQ&oe=69FAA677",
+      "desc": "2025第十一屆兩岸青年創客工作坊\n（7/4~7/12）五天溫州兩天杭州\n來到浙江工貿和陸生睡同個宿舍\n五天一起努力完成產品企劃\n以仰韶文化＆貓咪\n打造一個為女性設計的手部按摩儀！\n過程中有許多酸甜苦辣\n但仍無法阻擋我們青春熱血的設計魂🔥",
+      "descEn": "2025 The 11th Cross-Strait Youth Maker Workshop\n(Jul 4 - Jul 12 | Wenzhou & Hangzhou)\nDuring our time at Zhejiang Industry & Trade, we shared dorms with local students and collaborated intensively for five days to develop a complete product proposal. We successfully integrated Yangshao culture with",
+      "tags": [
+        "Wenzhou",
+        "Chihlee",
+        "Summer"
+      ],
+      "videos": [
+        "https://youtu.be/YoKF1rhJ6KU?si=ze7ptmlUhpO_cSDC",
+        "https://youtu.be/9kRkPIjm-lM"
+      ],
+      "files": [],
+      "images": [
+        "686198441_1256205326727040_4354644525205995787_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_ohc=_lWLYmtn5HEQ7kNvwGAc3rO&_nc_oc=AdoatE5cc4fTjf9Y6lqfgn2fUWHt5PFfznODpJtzFNxzaL4YU8XzsRfolywO-7R6I4e2uVO7uoQKejqa8wB8IZ63&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=cAk_DWiarSSyYdKChXXOCQ&_nc_ss=7b2a8&oh=00_Af57tqCyR3PJ63w4NQAOYNn9Kz9FcwzcpKXRRzsrjApZLg&oe=69FAA573|https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/686198441_1256205326727040_4354644525205995787_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_ohc=_lWLYmtn5HEQ7kNvwGAc3rO&_nc_oc=AdoatE5cc4fTjf9Y6lqfgn2fUWHt5PFfznODpJtzFNxzaL4YU8XzsRfolywO-7R6I4e2uVO7uoQKejqa8wB8IZ63&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=cAk_DWiarSSyYdKChXXOCQ&_nc_ss=7b2a8&oh=00_Af57tqCyR3PJ63w4NQAOYNn9Kz9FcwzcpKXRRzsrjApZLg&oe=69FAA573",
+        "684293026_1256205410060365_6286506459406330133_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=T3-6ZiXeO3kQ7kNvwGMM4ZR&_nc_oc=AdqqdKY06ipNGrXFmCh46XObEvISv1Aw4kFGK0BYjLL9RwRnvtubMybXPD7ilw4-xI_eCDjmim_05aHuYeu2ClEw&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=2pJ2jga8vjmGTKQRQqcbiw&_nc_ss=7b2a8&oh=00_Af6fUs3XrLVR17fd6Kw6XIo9wgTPdIFtWmUqBoW8ytKjxA&oe=69FAA53A|https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/684293026_1256205410060365_6286506459406330133_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=T3-6ZiXeO3kQ7kNvwGMM4ZR&_nc_oc=AdqqdKY06ipNGrXFmCh46XObEvISv1Aw4kFGK0BYjLL9RwRnvtubMybXPD7ilw4-xI_eCDjmim_05aHuYeu2ClEw&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=2pJ2jga8vjmGTKQRQqcbiw&_nc_ss=7b2a8&oh=00_Af6fUs3XrLVR17fd6Kw6XIo9wgTPdIFtWmUqBoW8ytKjxA&oe=69FAA53A",
+        "687014928_1256205413393698_3899383129817674584_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=dylmeCUUrMcQ7kNvwFIgP_H&_nc_oc=AdrL-WTf7MdBnNBimRIzlMwtzMFZhRYTK_vHX4yEs9BvGeLw31nHYeNS0a9Ik4dDF0R1UPaXP8g_es3VXBwV-6ol&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=JXXf6HpGYUPf6c_htQ4TFQ&_nc_ss=7b2a8&oh=00_Af67oGql-3ynvaFoc8TvCgpM9sqKzF4FhOL7ytKm7EZjHA&oe=69FAA698|https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/687014928_1256205413393698_3899383129817674584_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=dylmeCUUrMcQ7kNvwFIgP_H&_nc_oc=AdrL-WTf7MdBnNBimRIzlMwtzMFZhRYTK_vHX4yEs9BvGeLw31nHYeNS0a9Ik4dDF0R1UPaXP8g_es3VXBwV-6ol&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=JXXf6HpGYUPf6c_htQ4TFQ&_nc_ss=7b2a8&oh=00_Af67oGql-3ynvaFoc8TvCgpM9sqKzF4FhOL7ytKm7EZjHA&oe=69FAA698",
+        "685300979_1256205330060373_6708877270936087241_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=FRroQPYX5bYQ7kNvwFTPcfU&_nc_oc=AdrdH6kA8tfJ6P-wO9L97d5zpz8VKRdMcdppN9NBFoHEB6fjJuMlHGhHNOdzRSU_lO_lIecuzwwgU2XuvVWGR5ei&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=mSBWZsT7IEe13fUAgqTIvg&_nc_ss=7b2a8&oh=00_Af44cHph-vYBbBcG0HeZKNF-kYCufh4fEiI2UIqozawIyA&oe=69FA9439|https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/685300979_1256205330060373_6708877270936087241_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=FRroQPYX5bYQ7kNvwFTPcfU&_nc_oc=AdrdH6kA8tfJ6P-wO9L97d5zpz8VKRdMcdppN9NBFoHEB6fjJuMlHGhHNOdzRSU_lO_lIecuzwwgU2XuvVWGR5ei&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=mSBWZsT7IEe13fUAgqTIvg&_nc_ss=7b2a8&oh=00_Af44cHph-vYBbBcG0HeZKNF-kYCufh4fEiI2UIqozawIyA&oe=69FA9439",
+        "686516496_1256205343393705_4491172840007336445_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=ybT-ZbDD2fUQ7kNvwFKdxJd&_nc_oc=AdrH0g7ALzKWhVaaYC__59YR__rbD__jgk2oBrBHdnVqvEEbNXHxdfOmdxv0m878sp8Mj2S6Pq-fpGn5gvQTciG0&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=PQQi0aCJDWCxJO3NUdjemQ&_nc_ss=7b2a8&oh=00_Af59S_sa-IirCOpMn66qXg_KEQ81aq5i5q9BeIiokAcweg&oe=69FAC302|https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/686516496_1256205343393705_4491172840007336445_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=ybT-ZbDD2fUQ7kNvwFKdxJd&_nc_oc=AdrH0g7ALzKWhVaaYC__59YR__rbD__jgk2oBrBHdnVqvEEbNXHxdfOmdxv0m878sp8Mj2S6Pq-fpGn5gvQTciG0&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=PQQi0aCJDWCxJO3NUdjemQ&_nc_ss=7b2a8&oh=00_Af59S_sa-IirCOpMn66qXg_KEQ81aq5i5q9BeIiokAcweg&oe=69FAC302",
+        "https://cds.chinadaily.com.cn/dams/capital/image/202507/17/68784da36b8efd9fa641d87e_m.jpg",
+        "https://scontent.ftpe11-2.fna.fbcdn.net/v/t39.30808-6/518271624_1317285533738008_85243160687895795_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=58tw0nfvhTIQ7kNvwE8FO9n&_nc_oc=Adp565Da56dk40wogiPa32-94zQzH76t45IOHHTNduRu7_sR5dAbA0Nu1gJ6A7ulTiFsDId11W3CjGRkwc9xr93B&_nc_zt=23&_nc_ht=scontent.ftpe11-2.fna&_nc_gid=dCBjMtwYYZPJzEWIpE73EQ&_nc_ss=7b2a8&oh=00_Af74QeOuOrNBQhU6P1k__rmsROin7qEU9PdStCd7M6RqjA&oe=69FABEB7",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/686055438_1256201430060763_872467349645597116_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=IVt9ePIekk8Q7kNvwGvuzJX&_nc_oc=Adp82BZTnhRLx4bBysvLn6b4VFO3vZ1Y4lbTLqlXK1wW-uOU-0GHE4QQL4xgZZFPg9BRT8gB7fDWEbIv-bAhiNFu&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=Xo-_awL3_RpAB-3swzhPOg&_nc_ss=7b2a8&oh=00_Af7_Kk00Uu3UT99IjZil1n8HmkgZsnpK9OafSpUGVYURRg&oe=69FA9FE9",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/686727685_1256201480060758_4373552687472060710_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=9BUNP9IPTZIQ7kNvwEh-XNl&_nc_oc=AdrAbxKUSh4yQwlEF-vll-mCdUns1VKlAlWqgBRyaJWcdAhusYabFel1OPPUFeIOpZyeA1raOdTcHeQCJO5t8VgQ&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=ZTb_KNzeFTmavs-a-fj_nQ&_nc_ss=7b2a8&oh=00_Af4x4s-upUE5tzJ07FFVVW_VazTs-HrPmbCzn9DQbkLMeQ&oe=69FAA677",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/686176052_1256201426727430_2802089219145398056_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=3FCDid4lI3AQ7kNvwHFn9AG&_nc_oc=Adp-MIP71j-J3NfiMjYCwAvSfxfg2nprC2C9s_r2c8BR2Def-JQjP38QwOSA3FOZ-mcOZfO5epwIQdRZHFb28-aL&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=1trxwDY83chA3VxQR1DMXg&_nc_ss=7b2a8&oh=00_Af6z84v7eSlsE46Z71AIMlwIGdEgq9DK7DnoVtL_EkXRbQ&oe=69FA9D36",
+        "https://scontent.ftpe11-1.fna.fbcdn.net/v/t39.30808-6/684905159_1256201406727432_8107967113394576169_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=Tcn9a_82YfAQ7kNvwFyD0Pc&_nc_oc=AdpDx4TuyhBuZx3-E95TbFH7y-zF9b0Wcdh-dzCKLfceKiuzEfT8fBiYkBotsjDu4zGrTVrM4B9_-dgrODwlfnUY&_nc_zt=23&_nc_ht=scontent.ftpe11-1.fna&_nc_gid=h4UFjcTTH3gLC_xJwf8pNQ&_nc_ss=7b2a8&oh=00_Af7lUng6i2u6Be5gyYM7sSaYL9IpFYH1mGJMwykp8Yurkw&oe=69FA970F"
+      ],
+      "content": "【“海峽有渡·創意無限” 第十一屆兩岸青年創客工作坊在溫啟動】\n7月6日，以“海峽有渡·創意無限”為主題的第十一屆兩岸青年創客工作坊暨第二屆兩岸教師發展交流會在浙江工貿職業技術學院拉開帷幕。來自海峽兩岸80餘名青年創客、高校教師及行業企業代表齊聚溫州，共同開啟一場融合科技、文化與創新的交流盛宴。\n本屆創客工作坊緊扣AI時代發展需求，聚焦兩大核心方向。一方面，推動非遺、文創與AI深度融合。邀請多家企業圍繞公司IP角色矩陣、智能按摩設備、兒童娛樂設施等企業發展需求“出題”，兩岸高校的年輕創客將通過設計與原型開發“答題”。另一方面，促進兩岸教師共探育人新模式。以“AI融合創新——賦能教學、驅動科研、鏈接產業”為主題，兩岸教師通過交流會，圍繞AI課程開發、科研合作及產教融合路徑展開深度研討，攜手培育適應未來產業需求的創新型人才。\n\n[The 11th Cross-Strait Youth Maker Workshop, Themed \"Boundless Creativity Across the Strait,\" Kicks Off in Wenzhou]\n\nOn July 6, the 11th Cross-Strait Youth Maker Workshop and the 2nd Cross-Strait Teacher Development Exchange Meeting, themed \"Boundless Creativity Across the Strait\" (海峽有渡·創意無限), officially commenced at Zhejiang Industry and Trade Vocational College. Over 80 young makers, university faculty, and industry representatives from both sides of the strait gathered in Wenzhou to embark on a grand exchange integrating technology, culture, and innovation.\n\nClosely aligning with the demands of the AI era, this year's workshop focuses on two core directions.\n\nFirst, it drives the deep integration of intangible cultural heritage, cultural creativity, and AI. Several enterprises were invited to present \"challenges\" based on their development needs—such as IP character matrices, smart massage devices, and children's amusement facilities. Young makers from universities across the strait will provide \"solutions\" through design and prototype development.\n\nSecond, it encourages teachers from both sides to jointly explore new educational models. Under the theme \"AI Integrated Innovation—Empowering Teaching, Driving Research, and Linking Industries,\" educators will hold in-depth discussions on AI curriculum development, research collaboration, and pathways for industry-education integration, joining forces to cultivate innovative talents equipped for future industry needs."
     }
-  ],
-  "jx_carousel_v1": [
-    "https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/680492860_1253388340342072_1371082565753968645_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_ohc=enxl_GNXnUYQ7kNvwH3BvLN&_nc_oc=AdqgeRSiGUENa8GsNrWP_vvYM0H9O3E4Ulsf1ltKUiZJCIVOTOx61y5mPP1nHmXZfCU&_nc_zt=23&_nc_ht=scontent.ftpe8-3.fna&_nc_gid=30mIUqnUu8cNlbGrFJ6LVg&_nc_ss=7b2a8&oh=00_Af1BYma5P2Ea_kC2yF_TPh4mAxmiCJg5CZYsyau9WctQrA&oe=69F640E1",
-    "https://scontent.ftpe20-2.fna.fbcdn.net/v/t39.30808-6/679287754_1422721126535804_4938203560044054678_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=q6N4379H6YsQ7kNvwGfbJ6m&_nc_oc=AdptmlB47yjBDzssKKgVw5QpJnNM3elg741bQOyT-k903L2ZjhsztllIyFxU9kQYWPsfMqmuFg0RWjOuIih3TCYC&_nc_zt=23&_nc_ht=scontent.ftpe20-2.fna&_nc_gid=bEQ1YuqyNMXWY5o8_ZJVqg&_nc_ss=7b2a8&oh=00_Af3uhmHdsP0TRYbVPhs_9ToYKTi3MtY9WyfyRoQK2JNiRw&oe=69F77A60"
   ]
 }
