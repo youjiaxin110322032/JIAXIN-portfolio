@@ -202,6 +202,36 @@
 }
 .lightbox-close:hover { background: rgba(255,255,255,0.15); }
 
+/* Smaller title on work detail page */
+.work-header .prog-title {
+  font-size: clamp(32px, 5vw, 64px);
+}
+
+/* Back to top button */
+.back-to-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 60px;
+  padding: 12px 28px;
+  width: fit-content;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  background: rgba(255,255,255,0.04);
+  color: var(--gray);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.back-to-top:hover {
+  background: rgba(255,255,255,0.09);
+  color: #fff;
+  border-color: rgba(255,255,255,0.3);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .dm-container { padding: 0 16px 40px; }
