@@ -12,7 +12,6 @@
   <!-- 載入三種字體：Cormorant Garamond（襯線）、Inter 和 Space Grotesk（無襯線） -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <!-- model-viewer for 3D GLB embed -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body>
@@ -816,15 +815,15 @@
     }
   </script>
 
-  <!-- 彼岸花玻璃材質覆蓋 -->
+
+  <!-- 彼岸花玻璃材質 -->
   <script>
     document.getElementById('lilyViewer').addEventListener('load', function () {
-      var mv = this;
-      (mv.model.materials || []).forEach(function (mat) {
+      (this.model.materials || []).forEach(function (mat) {
         mat.setAlphaMode('BLEND');
         var pbr = mat.pbrMetallicRoughness;
         var c = pbr.baseColorFactor;
-        pbr.setBaseColorFactor([c[0], c[1], c[2], 0.38]);
+        pbr.setBaseColorFactor([c[0], c[1], c[2], 0.4]);
         pbr.setRoughnessFactor(0.04);
         pbr.setMetallicFactor(0.0);
       });
