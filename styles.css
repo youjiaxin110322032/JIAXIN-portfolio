@@ -1316,10 +1316,95 @@ footer {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
 }
 
+/* ─── 漢堡選單按鈕 ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 200;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--off-white);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ─── 手機導覽側拉選單 ─── */
+.nav-mobile {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100dvh;
+  background: rgba(6, 6, 15, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(245, 200, 66, 0.1);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  padding: 80px 32px 40px;
+  gap: 4px;
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.nav-mobile.open { right: 0; }
+.nav-mobile a {
+  display: block;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.2s;
+}
+.nav-mobile a:hover,
+.nav-mobile a.active { color: #fff; }
+.nav-mobile .nav-mobile-login {
+  margin-top: 28px;
+  width: 100%;
+  text-align: center;
+}
+
+/* ─── 背景遮罩 ─── */
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 290;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.nav-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* ─── 響應式斷點 768px（手機版） ─── */
 @media (max-width: 768px) {
   nav { padding: 16px 20px; }
-  .nav-links { display: none; }              /* 隱藏導覽連結（需另做漢堡選單） */
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  #loginBtn { display: none; }
   .container { padding: 0 20px; }
   .hero { padding: 100px 20px 60px; }
   .hero-stats { gap: 32px; }
@@ -1330,6 +1415,12 @@ footer {
   .footer-brand { max-width: 100%; }
   .cta-card { padding: 48px 24px; }
   .events-header { flex-direction: column; align-items: flex-start; }
+  .music-player { right: 12px; bottom: 20px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(38px, 12vw, 64px); }
+  .hero-sub { font-size: 13px; }
 }
 
 /* ─── 捲動淡入動畫 ─── */

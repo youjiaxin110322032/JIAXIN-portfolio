@@ -43,7 +43,23 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button id="loginBtn" class="btn btn-outline">登入 Login</button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- 手機導覽側拉選單 -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="#about">About</a>
+    <a href="program.html">Program</a>
+    <a href="#events">Events</a>
+    <a href="#community">Community</a>
+    <a href="#contact">Contact</a>
+    <div class="nav-mobile-login">
+      <button class="btn btn-outline" style="width:100%" onclick="document.getElementById('navMobile').classList.remove('open');document.getElementById('navBackdrop').classList.remove('open');document.getElementById('navHamburger').classList.remove('open');document.getElementById('loginModal').style.display='flex';">登入 Login</button>
+    </div>
+  </div>
+  <div class="nav-backdrop" id="navBackdrop"></div>
 
   <!-- ─── 登入 Modal ─── -->
   <div class="auth-modal" id="loginModal">
@@ -951,6 +967,30 @@
       mpMin.addEventListener('click', function () { setMin(!player.classList.contains('minimized')); });
       mpTab.addEventListener('click',  function () { setMin(false); });
     })();
+
+  // ── 漢堡選單 ──────────────────────────────────────────────────────
+  (function () {
+    var btn = document.getElementById('navHamburger');
+    var drawer = document.getElementById('navMobile');
+    var backdrop = document.getElementById('navBackdrop');
+    function openNav() {
+      drawer.classList.add('open');
+      backdrop.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    function closeNav() {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    btn.addEventListener('click', function () {
+      drawer.classList.contains('open') ? closeNav() : openNav();
+    });
+    backdrop.addEventListener('click', closeNav);
+    drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
+  })();
   </script>
 </body>
 </html>

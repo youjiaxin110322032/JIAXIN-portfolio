@@ -35,7 +35,19 @@
       <li><a href="index.html#community">Community</a></li>
     </ul>
     <button id="loginBtn" class="btn btn-outline">登入 Login</button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- 手機導覽側拉選單 -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html#about">About</a>
+    <a href="program.html" class="active">Program</a>
+    <a href="index.html#events">Events</a>
+    <a href="index.html#community">Community</a>
+  </div>
+  <div class="nav-backdrop" id="navBackdrop"></div>
 
   <!-- Page Header -->
   <header class="prog-header">
@@ -362,6 +374,18 @@
     await _dataReady;
     renderBubbles();
     renderAllWorks();
+  })();
+
+  // ── 漢堡選單 ──────────────────────────────────────────────────────
+  (function () {
+    var btn = document.getElementById('navHamburger');
+    var drawer = document.getElementById('navMobile');
+    var backdrop = document.getElementById('navBackdrop');
+    function openNav() { drawer.classList.add('open'); backdrop.classList.add('open'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    function closeNav() { drawer.classList.remove('open'); backdrop.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+    btn.addEventListener('click', function () { drawer.classList.contains('open') ? closeNav() : openNav(); });
+    backdrop.addEventListener('click', closeNav);
+    drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeNav); });
   })();
   </script>
 </body>
