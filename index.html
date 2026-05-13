@@ -798,6 +798,30 @@
         document.body.appendChild(star);
         setTimeout(() => star.remove(), 5800);
       });
+
+      // ── 捲到 PROGRAM 區塊時星辰漸隱 ──
+      const progEl = document.getElementById('prog-showcase');
+      if (progEl) {
+        window.addEventListener('scroll', () => {
+          const progTop = progEl.getBoundingClientRect().top;
+          const vh = window.innerHeight;
+          if (progTop >= vh) return;
+          // prog 從畫面底部進入到完全可見：t = 0→1
+          const t = Math.min(1, (vh - progTop) / (vh * 0.5));
+          const target = Math.max(0, 1 - t);
+          document.querySelectorAll('.click-star').forEach(s => {
+            if (!s._fading) {
+              s._fading = true;
+              const cur = parseFloat(getComputedStyle(s).opacity) || 1;
+              s.style.animation = 'none';
+              s.style.opacity   = cur;
+              s.style.transition = 'opacity 0.3s ease';
+            }
+            s.style.opacity = target;
+            if (target === 0) s.remove();
+          });
+        }, { passive: true });
+      }
     })();
 
     // ── 蠟燭影片 hover：將游標光暈切換為暖色火焰狀態 ──
