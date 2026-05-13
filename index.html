@@ -78,9 +78,10 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <!-- 彼岸花 3D 模型（透明玻璃青藍） -->
+    <!-- 彼岸花 3D 模型 -->
     <div class="lily-wrap">
       <model-viewer
+        id="lilyViewer"
         class="lily-viewer"
         src="models/spider-lily.glb"
         alt="Red Spider Lily 彼岸花"
@@ -89,7 +90,8 @@
         rotation-per-second="20deg"
         interaction-prompt="none"
         shadow-intensity="0"
-        exposure="0.9"
+        exposure="0.7"
+        environment-image="neutral"
       ></model-viewer>
     </div>
 
@@ -812,6 +814,21 @@
         glowOuter.classList.remove('fire');
       });
     }
+  </script>
+
+  <!-- 彼岸花玻璃材質覆蓋 -->
+  <script>
+    document.getElementById('lilyViewer').addEventListener('load', function () {
+      var mv = this;
+      (mv.model.materials || []).forEach(function (mat) {
+        mat.setAlphaMode('BLEND');
+        var pbr = mat.pbrMetallicRoughness;
+        var c = pbr.baseColorFactor;
+        pbr.setBaseColorFactor([c[0], c[1], c[2], 0.38]);
+        pbr.setRoughnessFactor(0.04);
+        pbr.setMetallicFactor(0.0);
+      });
+    });
   </script>
 </body>
 </html>
