@@ -195,22 +195,108 @@ nav {
   overflow: hidden;
 }
 
-/* 彼岸花 3D 模型：左下角定位 */
-.lily-viewer {
+/* ── 彼岸花全息科幻 3D 模型 ──────────────────────────────────────── */
+.lily-wrap {
   position: absolute;
   bottom: -40px;
   left: -40px;
   width: 680px;
   height: 680px;
   z-index: 2;
-  --progress-bar-color: transparent;
   pointer-events: none;
 }
+
+/* 模型本體：色相偏移為青藍色 + 霓虹增幅 */
+.lily-viewer {
+  width: 100%;
+  height: 100%;
+  --progress-bar-color: transparent;
+  filter:
+    hue-rotate(205deg)
+    saturate(6)
+    brightness(2.2)
+    contrast(1.15)
+    drop-shadow(0 0 18px rgba(0, 220, 255, 0.9))
+    drop-shadow(0 0 45px rgba(0, 160, 255, 0.55));
+  animation: holoFlicker 4s ease-in-out infinite;
+}
+
+/* 掃描線疊加層 */
+.lily-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 240, 255, 0.04) 3px,
+    rgba(0, 240, 255, 0.04) 4px
+  );
+  border-radius: 50%;
+  z-index: 3;
+  animation: scanMove 6s linear infinite;
+}
+
+/* 外圍光環脈衝 */
+.lily-holo-ring {
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 220, 255, 0.25);
+  box-shadow:
+    0 0 40px 12px rgba(0, 200, 255, 0.18),
+    0 0 100px 30px rgba(0, 140, 255, 0.10),
+    inset 0 0 40px 8px rgba(0, 200, 255, 0.08);
+  animation: holoRing 3.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes holoFlicker {
+  0%, 100% {
+    filter:
+      hue-rotate(205deg) saturate(6) brightness(2.2) contrast(1.15)
+      drop-shadow(0 0 18px rgba(0,220,255,0.9))
+      drop-shadow(0 0 45px rgba(0,160,255,0.55));
+    opacity: 1;
+  }
+  45% {
+    filter:
+      hue-rotate(215deg) saturate(7) brightness(2.6) contrast(1.2)
+      drop-shadow(0 0 28px rgba(0,240,255,1))
+      drop-shadow(0 0 70px rgba(0,180,255,0.7));
+    opacity: 1;
+  }
+  47% { opacity: 0.85; }
+  49% { opacity: 1; }
+}
+
+@keyframes holoRing {
+  0%, 100% {
+    box-shadow:
+      0 0 40px 12px rgba(0,200,255,0.18),
+      0 0 100px 30px rgba(0,140,255,0.10),
+      inset 0 0 40px 8px rgba(0,200,255,0.08);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 60px 20px rgba(0,220,255,0.28),
+      0 0 140px 50px rgba(0,160,255,0.16),
+      inset 0 0 60px 12px rgba(0,220,255,0.12);
+    transform: scale(1.04);
+  }
+}
+
+@keyframes scanMove {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+
 @media (max-width: 900px) {
-  .lily-viewer { width: 420px; height: 420px; bottom: -20px; left: -20px; }
+  .lily-wrap { width: 440px; height: 440px; bottom: -20px; left: -20px; }
 }
 @media (max-width: 600px) {
-  .lily-viewer { width: 280px; height: 280px; bottom: -10px; left: -10px; opacity: 0.7; }
+  .lily-wrap { width: 280px; height: 280px; bottom: -10px; left: -10px; opacity: 0.75; }
 }
 
 /* Hero 中央輻射光暈（偽元素） */

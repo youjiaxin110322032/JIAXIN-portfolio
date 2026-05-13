@@ -78,18 +78,22 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <!-- 彼岸花 3D 模型 -->
-    <model-viewer
-      class="lily-viewer"
-      src="models/spider-lily.glb"
-      alt="Red Spider Lily 彼岸花"
-      auto-rotate
-      auto-rotate-delay="0"
-      rotation-per-second="20deg"
-      interaction-prompt="none"
-      shadow-intensity="0"
-      exposure="1.2"
-    ></model-viewer>
+    <!-- 彼岸花 3D 模型（全息科幻風格） -->
+    <div class="lily-wrap">
+      <div class="lily-holo-ring"></div>
+      <div class="lily-scanlines"></div>
+      <model-viewer
+        class="lily-viewer"
+        src="models/spider-lily.glb"
+        alt="Red Spider Lily 彼岸花"
+        auto-rotate
+        auto-rotate-delay="0"
+        rotation-per-second="20deg"
+        interaction-prompt="none"
+        shadow-intensity="0"
+        exposure="2.2"
+      ></model-viewer>
+    </div>
 
     <div class="hero-content">
       
