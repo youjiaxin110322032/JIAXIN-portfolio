@@ -865,17 +865,26 @@
   <audio id="bgMusic" src="media/kairo.mp3" preload="metadata"></audio>
 
   <div class="music-player" id="musicPlayer">
-    <button class="mp-close" id="mpClose">✕</button>
-    <img class="mp-cover" src="media/alnum.jpg" alt="Album Cover" />
-    <div class="mp-title">KAIRO - Can You Love Me Tonight</div>
-    <div class="mp-controls">
-      <button class="mp-btn mp-play" id="mpPlay">▶</button>
+    <!-- 最小化 tab（縮起後顯示） -->
+    <div class="mp-tab" id="mpTab">♫</div>
+    <!-- Header 列 -->
+    <div class="mp-header">
+      <button class="mp-min" id="mpMin" title="縮到邊緣">⟩</button>
+      <button class="mp-close" id="mpClose" title="關閉">✕</button>
     </div>
-    <div class="mp-progress-row">
-      <div class="mp-bar" id="mpBar">
-        <div class="mp-fill" id="mpFill"></div>
+    <!-- 主體（最小化時隱藏） -->
+    <div class="mp-body" id="mpBody">
+      <img class="mp-cover" src="media/alnum.jpg" alt="Album Cover" />
+      <div class="mp-label">工作室推薦歌曲</div>
+      <div class="mp-title">KAIRO - Can You Love Me Tonight</div>
+      <div class="mp-subtitle">用聆聽一首歌的時間慢慢品味作品集</div>
+      <div class="mp-controls">
+        <button class="mp-btn mp-play" id="mpPlay">▶</button>
       </div>
-      <span class="mp-time" id="mpTime">0:00</span>
+      <div class="mp-progress-row">
+        <div class="mp-bar" id="mpBar"><div class="mp-fill" id="mpFill"></div></div>
+        <span class="mp-time" id="mpTime">0:00</span>
+      </div>
     </div>
   </div>
 
@@ -887,6 +896,8 @@
       var audio  = document.getElementById('bgMusic');
       var mpPlay = document.getElementById('mpPlay');
       var mpClose= document.getElementById('mpClose');
+      var mpMin  = document.getElementById('mpMin');
+      var mpTab  = document.getElementById('mpTab');
       var mpBar  = document.getElementById('mpBar');
       var mpFill = document.getElementById('mpFill');
       var mpTime = document.getElementById('mpTime');
@@ -937,6 +948,14 @@
         var rect = mpBar.getBoundingClientRect();
         audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
       });
+
+      // 最小化：縮到右側邊緣
+      function setMin(on) {
+        player.classList.toggle('minimized', on);
+        mpMin.textContent = on ? '⟨' : '⟩';
+      }
+      mpMin.addEventListener('click', function () { setMin(!player.classList.contains('minimized')); });
+      mpTab.addEventListener('click',  function () { setMin(false); });
     })();
   </script>
 </body>
