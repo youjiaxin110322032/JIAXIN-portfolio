@@ -816,14 +816,15 @@
   </script>
 
 
-  <!-- 彼岸花玻璃材質 -->
+  <!-- 彼岸花玻璃材質覆蓋 -->
   <script>
     document.getElementById('lilyViewer').addEventListener('load', function () {
-      (this.model.materials || []).forEach(function (mat) {
+      var mv = this;
+      (mv.model.materials || []).forEach(function (mat) {
         mat.setAlphaMode('BLEND');
         var pbr = mat.pbrMetallicRoughness;
         var c = pbr.baseColorFactor;
-        pbr.setBaseColorFactor([c[0], c[1], c[2], 0.4]);
+        pbr.setBaseColorFactor([c[0], c[1], c[2], 0.38]);
         pbr.setRoughnessFactor(0.04);
         pbr.setMetallicFactor(0.0);
       });
