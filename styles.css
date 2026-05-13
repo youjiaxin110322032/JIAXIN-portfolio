@@ -195,6 +195,24 @@ nav {
   overflow: hidden;
 }
 
+/* 彼岸花 3D 模型：左下角定位 */
+.lily-viewer {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 480px;
+  height: 480px;
+  z-index: 2;
+  --progress-bar-color: transparent;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .lily-viewer { width: 280px; height: 280px; bottom: -10px; left: -10px; }
+}
+@media (max-width: 600px) {
+  .lily-viewer { width: 200px; height: 200px; opacity: 0.6; }
+}
+
 /* Hero 中央輻射光暈（偽元素） */
 .hero::after {
   content: '';
