@@ -1,13 +1,4 @@
-﻿/* BidensFonts 自訂字型 */
-@font-face {
-  font-family: 'BidensFonts';
-  src: url('fonts/BidensFonts.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* 全域重置：清除所有元素的預設 margin、padding 並使用 border-box 計算寬度 */
+﻿/* 全域重置：清除所有元素的預設 margin、padding 並使用 border-box 計算寬度 */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ─── CSS 自訂變數（設計 Token） ─── */
@@ -308,11 +299,11 @@ nav {
   50% { opacity: 0.4; }
 }
 
-/* Hero 主標題（BidensFonts 自訂字型，響應式字級） */
+/* Hero 主標題（大型襯線字體，響應式字級） */
 .hero-title {
-  font-family: 'BidensFonts', var(--font-serif);
+  font-family: var(--font-serif);
   font-size: clamp(52px, 8vw, 96px);  /* 最小 52px，最大 96px */
-  font-weight: normal;
+  font-weight: 300;
   line-height: 1.0;
   letter-spacing: -0.01em;
   margin-bottom: 8px;
@@ -415,10 +406,10 @@ section {
 /* 區塊小標籤（如 "Who We Are"，金色全大寫） */
 .section-label {
   display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-family: 'BidensFonts', var(--font-serif);
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
   color: var(--gold);
   margin-bottom: 16px;
 }
