@@ -208,6 +208,17 @@ nav {
   left: -55px;
   width: 578px;
   height: 578px;
+  pointer-events: auto;
+  transition: filter 0.4s ease;
+}
+
+/* Hover：亮度 +20% */
+.lily-left.lily-hover .lily-viewer {
+  filter:
+    hue-rotate(178deg) saturate(3) brightness(1.38) contrast(0.88)
+    drop-shadow(0 0 4px rgba(255,255,255,0.38))
+    drop-shadow(0 0 11px rgba(0,220,255,0.63))
+    drop-shadow(0 0 27px rgba(0,170,255,0.35));
 }
 
 .lily-viewer {
@@ -1644,6 +1655,122 @@ footer {
   10%  { opacity: 1; }
   80%  { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/* ── 彼岸花音樂播放器（Glassmorphism）──────────────────────────── */
+.music-player {
+  display: none;
+  position: fixed;
+  right: 28px;
+  bottom: 80px;
+  width: 288px;
+  background: rgba(7, 7, 13, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255,255,255,0.11);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    inset 0 0 0 0.5px rgba(255,255,255,0.05),
+    0 24px 64px rgba(0,0,0,0.75),
+    0 0 28px rgba(0,160,255,0.06);
+  padding: 20px;
+  z-index: 6000;
+  animation: mpIn 0.35s cubic-bezier(.22,1,.36,1) both;
+}
+.music-player.open { display: block; }
+
+@keyframes mpIn {
+  from { opacity:0; transform: translateY(20px) scale(0.95); }
+  to   { opacity:1; transform: translateY(0)    scale(1); }
+}
+
+.mp-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.mp-close:hover { background: rgba(255,255,255,0.13); color: #fff; }
+
+.mp-cover {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.mp-title {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.mp-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.mp-btn {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.mp-btn:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(0,200,255,0.5);
+  box-shadow: 0 0 18px rgba(0,200,255,0.28);
+}
+
+.mp-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mp-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.mp-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00aaff, #7df9ff);
+  border-radius: 3px;
+}
+
+.mp-time {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  min-width: 30px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── Loading Screen ───────────────────────────────────────────────── */

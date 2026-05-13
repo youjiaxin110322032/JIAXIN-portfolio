@@ -775,7 +775,7 @@
 
       // ── 點擊背景產生旋轉星辰 ──
       hero.addEventListener('click', e => {
-        if (e.target.closest('a, button, .hero-badge')) return;
+        if (e.target.closest('a, button, .hero-badge, .lily-wrap')) return;
         const star = document.createElement('div');
         star.className = 'click-star';
         star.style.left = e.clientX + 'px';
@@ -859,6 +859,85 @@
       });
     }
     applyGlass('lilyViewer');
+  </script>
+
+  <!-- 音樂播放器 -->
+  <audio id="bgMusic" src="media/kairo.mp3" preload="metadata"></audio>
+
+  <div class="music-player" id="musicPlayer">
+    <button class="mp-close" id="mpClose">✕</button>
+    <img class="mp-cover" src="media/alnum.jpg" alt="Album Cover" />
+    <div class="mp-title">KAIRO - Can You Love Me Tonight</div>
+    <div class="mp-controls">
+      <button class="mp-btn mp-play" id="mpPlay">▶</button>
+    </div>
+    <div class="mp-progress-row">
+      <div class="mp-bar" id="mpBar">
+        <div class="mp-fill" id="mpFill"></div>
+      </div>
+      <span class="mp-time" id="mpTime">0:00</span>
+    </div>
+  </div>
+
+  <!-- 彼岸花 hover / click 互動 + 播放器邏輯 -->
+  <script>
+    (function () {
+      var lily   = document.querySelector('.lily-left');
+      var player = document.getElementById('musicPlayer');
+      var audio  = document.getElementById('bgMusic');
+      var mpPlay = document.getElementById('mpPlay');
+      var mpClose= document.getElementById('mpClose');
+      var mpBar  = document.getElementById('mpBar');
+      var mpFill = document.getElementById('mpFill');
+      var mpTime = document.getElementById('mpTime');
+      if (!lily || !player || !audio) return;
+
+      // 開啟互動
+      lily.style.pointerEvents = 'auto';
+      lily.style.cursor = 'pointer';
+
+      // Hover：亮度 +20%
+      lily.addEventListener('mouseenter', function () { lily.classList.add('lily-hover'); });
+      lily.addEventListener('mouseleave', function () { lily.classList.remove('lily-hover'); });
+
+      // Click：顯示播放器並自動播放
+      lily.addEventListener('click', function (e) {
+        e.stopPropagation();
+        player.classList.add('open');
+        audio.play();
+        mpPlay.textContent = '⏸';
+      });
+
+      // Play / Pause
+      mpPlay.addEventListener('click', function () {
+        if (audio.paused) { audio.play(); mpPlay.textContent = '⏸'; }
+        else              { audio.pause(); mpPlay.textContent = '▶'; }
+      });
+
+      // Close
+      mpClose.addEventListener('click', function () {
+        player.classList.remove('open');
+        audio.pause();
+        audio.currentTime = 0;
+        mpPlay.textContent = '▶';
+      });
+
+      // Progress bar
+      audio.addEventListener('timeupdate', function () {
+        if (!audio.duration) return;
+        var pct = (audio.currentTime / audio.duration) * 100;
+        mpFill.style.width = pct + '%';
+        var m = Math.floor(audio.currentTime / 60);
+        var s = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+        mpTime.textContent = m + ':' + s;
+      });
+
+      // Seek
+      mpBar.addEventListener('click', function (e) {
+        var rect = mpBar.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+      });
+    })();
   </script>
 </body>
 </html>
