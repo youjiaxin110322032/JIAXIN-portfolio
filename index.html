@@ -77,8 +77,8 @@
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 
-    <!-- 彼岸花 3D 模型 -->
-    <div class="lily-wrap">
+    <!-- 彼岸花左（主） -->
+    <div class="lily-wrap lily-left">
       <model-viewer
         id="lilyViewer"
         class="lily-viewer"
@@ -89,9 +89,28 @@
         rotation-per-second="20deg"
         interaction-prompt="none"
         shadow-intensity="0"
-        exposure="0.7"
+        exposure="0.85"
         environment-image="neutral"
       ></model-viewer>
+    </div>
+
+    <!-- 彼岸花右（鏡射，縮小50%，30deg/s） -->
+    <div class="lily-wrap lily-right">
+      <div class="lily-mirror">
+        <model-viewer
+          id="lilyViewerRight"
+          class="lily-viewer"
+          src="models/spider-lily.glb"
+          alt="Red Spider Lily 彼岸花（右）"
+          auto-rotate
+          auto-rotate-delay="0"
+          rotation-per-second="-30deg"
+          interaction-prompt="none"
+          shadow-intensity="0"
+          exposure="0.85"
+          environment-image="neutral"
+        ></model-viewer>
+      </div>
     </div>
 
     <div class="hero-content">
@@ -818,17 +837,23 @@
 
   <!-- 彼岸花玻璃材質覆蓋 -->
   <script>
-    document.getElementById('lilyViewer').addEventListener('load', function () {
-      var mv = this;
-      (mv.model.materials || []).forEach(function (mat) {
-        mat.setAlphaMode('BLEND');
-        var pbr = mat.pbrMetallicRoughness;
-        var c = pbr.baseColorFactor;
-        pbr.setBaseColorFactor([c[0], c[1], c[2], 0.38]);
-        pbr.setRoughnessFactor(0.04);
-        pbr.setMetallicFactor(0.0);
+    function applyGlass(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('load', function () {
+        var mv = this;
+        (mv.model.materials || []).forEach(function (mat) {
+          mat.setAlphaMode('BLEND');
+          var pbr = mat.pbrMetallicRoughness;
+          var c = pbr.baseColorFactor;
+          pbr.setBaseColorFactor([c[0], c[1], c[2], 0.38]);
+          pbr.setRoughnessFactor(0.04);
+          pbr.setMetallicFactor(0.0);
+        });
       });
-    });
+    }
+    applyGlass('lilyViewer');
+    applyGlass('lilyViewerRight');
   </script>
 </body>
 </html>
