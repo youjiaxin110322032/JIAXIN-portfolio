@@ -638,39 +638,33 @@
       lastScrollY = currentScrollY;
     });
 
-    // ── 游標光暈線性插值追蹤（lerp follow）──
-    const glowOuter = document.querySelector('.glow.outer');
-    const glowInner = document.querySelector('.glow.inner');
+    // ── 游標光暈線性插值追蹤（僅限滑鼠裝置）──
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+      const glowOuter = document.querySelector('.glow.outer');
+      const glowInner = document.querySelector('.glow.inner');
 
-    // 外層速度較慢（產生拖曳感），內層速度較快（貼近游標）
-    const SPEED_OUTER = 0.08;
-    const SPEED_INNER = 0.16;
+      const SPEED_OUTER = 0.08;
+      const SPEED_INNER = 0.16;
 
-    // 滑鼠目標座標與兩個光暈的當前座標
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let ox = targetX, oy = targetY;  // 外層當前位置
-    let ix = targetX, iy = targetY;  // 內層當前位置
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let ox = targetX, oy = targetY;
+      let ix = targetX, iy = targetY;
 
-    // 監聽滑鼠移動，更新目標座標
-    window.addEventListener('mousemove', e => { targetX = e.clientX; targetY = e.clientY; });
-    // 支援觸控裝置（passive 提升捲動效能）
-    window.addEventListener('touchmove', e => {
-      targetX = e.touches[0].clientX; targetY = e.touches[0].clientY;
-    }, { passive: true });
+      window.addEventListener('mousemove', e => { targetX = e.clientX; targetY = e.clientY; });
 
-    // 動畫迴圈：每幀以線性插值逼近目標座標（達到平滑追蹤效果）
-    (function animate() {
-      ox += (targetX - ox) * SPEED_OUTER;  // 外層 X 方向插值
-      oy += (targetY - oy) * SPEED_OUTER;  // 外層 Y 方向插值
-      ix += (targetX - ix) * SPEED_INNER;  // 內層 X 方向插值
-      iy += (targetY - iy) * SPEED_INNER;  // 內層 Y 方向插值
-      glowOuter.style.left = ox + 'px';
-      glowOuter.style.top  = oy + 'px';
-      glowInner.style.left = ix + 'px';
-      glowInner.style.top  = iy + 'px';
-      requestAnimationFrame(animate);  // 遞迴呼叫，持續每幀更新
-    })();
+      (function animate() {
+        ox += (targetX - ox) * SPEED_OUTER;
+        oy += (targetY - oy) * SPEED_OUTER;
+        ix += (targetX - ix) * SPEED_INNER;
+        iy += (targetY - iy) * SPEED_INNER;
+        glowOuter.style.left = ox + 'px';
+        glowOuter.style.top  = oy + 'px';
+        glowInner.style.left = ix + 'px';
+        glowInner.style.top  = iy + 'px';
+        requestAnimationFrame(animate);
+      })();
+    }
 
     // 視窗縮放時重置目標座標（防止 NaN 導致光暈消失）
     window.addEventListener('resize', () => {

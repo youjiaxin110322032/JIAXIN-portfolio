@@ -1351,6 +1351,12 @@ footer {
 .fade-up-delay-2 { transition-delay: 0.2s; }
 .fade-up-delay-3 { transition-delay: 0.3s; }
 
+/* 觸控裝置（手機/平板）：還原系統游標，隱藏自訂光暈 */
+@media (pointer: coarse) {
+  body { cursor: auto !important; }
+  .cursor-glow-wrap { display: none !important; }
+}
+
 /* ─── 自訂游標光暈容器 ─── */
 .cursor-glow-wrap {
   position: fixed;
