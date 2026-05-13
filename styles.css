@@ -198,19 +198,19 @@ nav {
 /* 彼岸花 3D 模型：左下角定位 */
 .lily-viewer {
   position: absolute;
-  bottom: -20px;
-  left: -20px;
-  width: 480px;
-  height: 480px;
+  bottom: -40px;
+  left: -40px;
+  width: 680px;
+  height: 680px;
   z-index: 2;
   --progress-bar-color: transparent;
   pointer-events: none;
 }
 @media (max-width: 900px) {
-  .lily-viewer { width: 280px; height: 280px; bottom: -10px; left: -10px; }
+  .lily-viewer { width: 420px; height: 420px; bottom: -20px; left: -20px; }
 }
 @media (max-width: 600px) {
-  .lily-viewer { width: 200px; height: 200px; opacity: 0.6; }
+  .lily-viewer { width: 280px; height: 280px; bottom: -10px; left: -10px; opacity: 0.7; }
 }
 
 /* Hero 中央輻射光暈（偽元素） */
