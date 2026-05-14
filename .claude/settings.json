@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m ' *)",
+      "Bash(cp \"red+spider+lily+3d+model.glb\" models/spider-lily.glb)"
+    ]
+  }
+}
