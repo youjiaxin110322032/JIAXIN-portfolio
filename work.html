@@ -97,7 +97,11 @@
         </div>
         <div class="prog-field">
           <label>縮圖 URL Thumbnail</label>
-          <input type="url" id="ewThumb" placeholder="https://..." />
+          <input type="text" id="ewThumb" placeholder="image/img/cover.jpg 或貼上完整路徑" />
+          <div class="thumb-lib">
+            <button type="button" class="thumb-lib-btn" onclick="toggleEWThumbLib()">📷 從縮圖庫選取</button>
+            <div id="ewThumbLib" class="thumb-lib-panel" style="display:none"></div>
+          </div>
         </div>
         <div class="prog-field-row">
           <div class="prog-field">
@@ -111,7 +115,14 @@
         </div>
         <div class="prog-field">
           <label>圖片 URLs（每行一個）</label>
-          <textarea id="ewImages" rows="3" placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"></textarea>
+          <textarea id="ewImages" rows="3" placeholder="image/contentimg/photo.jpg&#10;https://example.com/image2.jpg"
+            oninput="renderEWImgPreview()"></textarea>
+          <div class="thumb-lib">
+            <button type="button" class="thumb-lib-btn" onclick="toggleEWContentLib()">🖼 從內文圖庫選取（多選）</button>
+            <div id="ewContentLib" class="thumb-lib-panel" style="display:none"></div>
+          </div>
+          <!-- Live preview -->
+          <div id="ewImgPreview" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
         </div>
         <div class="prog-field">
           <label>影音連結 Videos（YouTube / Vimeo / MP4，每行一個）</label>
@@ -169,6 +180,194 @@
   <script src="jiaxin-core.js"></script>
   <script src="loader.js"></script>
   <script>
+  // ── Path Normalizer ───────────────────────────────────────────────
+  let _ewRoot = '';
+  fetch('/api/root').then(r => r.json()).then(d => {
+    _ewRoot = (d.root || '').replace(/\\/g, '/').replace(/\/+$/, '');
+  }).catch(() => {});
+
+  function ewNormPath(raw) {
+    const p = (raw || '').trim();
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    let s = p.replace(/\\/g, '/');
+    if (_ewRoot) {
+      const root = _ewRoot.replace(/\\/g, '/').replace(/\/+$/, '');
+      if (s.toLowerCase().startsWith(root.toLowerCase()))
+        return s.slice(root.length).replace(/^\/+/, '');
+    }
+    const m = s.match(/^[A-Za-z]:\/(?:[^\/]+\/)*?claudecode\/(.+)$/i);
+    if (m) return m[1];
+    return s;
+  }
+
+  // ── Thumbnail Library (image/img → ewThumb) ───────────────────────
+  let _ewThumbCache = null;
+
+  async function toggleEWThumbLib() {
+    const panel = document.getElementById('ewThumbLib');
+    if (!panel) return;
+    if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    if (_ewThumbCache === null) {
+      panel.innerHTML = '<div class="fs-status">⟳ 載入縮圖庫…</div>';
+      try {
+        const r = await fetch('/api/list-images?path=image/img');
+        const d = await r.json();
+        _ewThumbCache = d.images || [];
+      } catch { _ewThumbCache = []; }
+    }
+    renderEWThumbLib();
+  }
+
+  async function ewRefreshThumbLib() {
+    _ewThumbCache = null;
+    const panel = document.getElementById('ewThumbLib');
+    if (panel) panel.innerHTML = '<div class="fs-status">⟳ 重新整理…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=image/img');
+      const d = await r.json();
+      _ewThumbCache = d.images || [];
+    } catch { _ewThumbCache = []; }
+    renderEWThumbLib();
+  }
+
+  function renderEWThumbLib() {
+    const panel = document.getElementById('ewThumbLib');
+    const curVal = (document.getElementById('ewThumb')?.value || '').trim();
+    if (!_ewThumbCache?.length) {
+      panel.innerHTML = `
+        <div class="thumb-lib-header">
+          <span class="fs-status" style="margin:0">📂 縮圖庫尚無圖片（image/img 資料夾為空）</span>
+          <button type="button" class="thumb-lib-refresh" onclick="ewRefreshThumbLib()">↺ 重新整理</button>
+        </div>`;
+      return;
+    }
+    panel.innerHTML = `
+      <div class="thumb-lib-header">
+        <span class="fs-status" style="margin:0">縮圖庫 — ${_ewThumbCache.length} 張</span>
+        <button type="button" class="thumb-lib-refresh" onclick="ewRefreshThumbLib()">↺ 重新整理</button>
+      </div>
+      <div class="fs-grid">
+        ${_ewThumbCache.map(img => `
+          <div class="fs-img ${img.path === curVal ? 'thumb' : ''}"
+               onclick="ewPickThumb('${img.path}')" title="${img.name}">
+            <img src="${img.url}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'" />
+            ${img.path === curVal ? '<span class="fs-thumb-badge">已選</span>' : ''}
+            <span class="fs-img-name">${img.name}</span>
+          </div>`).join('')}
+      </div>
+      <div class="fs-hint">單擊圖片以設為縮圖</div>`;
+  }
+
+  function ewPickThumb(path) {
+    const el = document.getElementById('ewThumb');
+    if (el) { el.value = path; el.style.borderColor = 'rgba(0,238,221,0.7)'; setTimeout(() => { el.style.borderColor = ''; }, 1200); }
+    renderEWThumbLib();
+  }
+
+  // ── Content Image Library (image/contentimg → ewImages) ───────────
+  let _ewContentCache = null;
+  let _ewContentSel = new Set();
+
+  async function toggleEWContentLib() {
+    const panel = document.getElementById('ewContentLib');
+    if (!panel) return;
+    if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    if (_ewContentCache === null) {
+      panel.innerHTML = '<div class="fs-status">⟳ 載入內文圖庫…</div>';
+      try {
+        const r = await fetch('/api/list-images?path=image/contentimg');
+        const d = await r.json();
+        _ewContentCache = d.images || [];
+        const existing = new Set(
+          (document.getElementById('ewImages')?.value || '')
+            .split('\n').map(s => s.trim()).filter(Boolean)
+        );
+        _ewContentSel = new Set(
+          _ewContentCache.map((img, i) => existing.has(img.path) ? i : -1).filter(i => i >= 0)
+        );
+      } catch { _ewContentCache = []; }
+    }
+    renderEWContentLib();
+  }
+
+  async function ewRefreshContentLib() {
+    _ewContentCache = null; _ewContentSel = new Set();
+    const panel = document.getElementById('ewContentLib');
+    if (panel) panel.innerHTML = '<div class="fs-status">⟳ 重新整理…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=image/contentimg');
+      const d = await r.json();
+      _ewContentCache = d.images || [];
+      _ewContentSel = new Set(_ewContentCache.map((_,i) => i));
+    } catch { _ewContentCache = []; }
+    renderEWContentLib();
+  }
+
+  function renderEWContentLib() {
+    const panel = document.getElementById('ewContentLib');
+    if (!_ewContentCache?.length) {
+      panel.innerHTML = `
+        <div class="thumb-lib-header">
+          <span class="fs-status" style="margin:0">📂 內文圖庫尚無圖片（image/contentimg 資料夾為空）</span>
+          <button type="button" class="thumb-lib-refresh" onclick="ewRefreshContentLib()">↺ 重新整理</button>
+        </div>`;
+      return;
+    }
+    panel.innerHTML = `
+      <div class="thumb-lib-header">
+        <span class="fs-status" style="margin:0">內文圖庫 — ${_ewContentCache.length} 張</span>
+        <button type="button" class="thumb-lib-refresh" onclick="ewRefreshContentLib()">↺ 重新整理</button>
+      </div>
+      <div class="fs-grid">
+        ${_ewContentCache.map((img, i) => `
+          <div class="fs-img ${_ewContentSel.has(i) ? 'sel' : ''}"
+               onclick="ewContentToggle(${i})" title="${img.name}">
+            <img src="${img.url}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'" />
+            ${_ewContentSel.has(i) ? '<span class="fs-check-badge">✓</span>' : ''}
+            <span class="fs-img-name">${img.name}</span>
+          </div>`).join('')}
+      </div>
+      <div class="fs-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="ewContentApply()">✓ 套用至圖片欄位</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="ewContentAll()">全選</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="ewContentClear()">取消全選</button>
+      </div>
+      <div class="fs-hint">單擊 = 選取／取消 &nbsp;·&nbsp; 套用後取代現有欄位</div>`;
+  }
+
+  function ewContentToggle(i) {
+    if (_ewContentSel.has(i)) _ewContentSel.delete(i); else _ewContentSel.add(i);
+    renderEWContentLib();
+  }
+  function ewContentAll()   { _ewContentSel = new Set(_ewContentCache.map((_,i)=>i)); renderEWContentLib(); }
+  function ewContentClear() { _ewContentSel = new Set(); renderEWContentLib(); }
+
+  function ewContentApply() {
+    if (!_ewContentCache?.length) return;
+    const paths = [..._ewContentSel].sort((a,b)=>a-b).map(i => _ewContentCache[i].path);
+    const ta = document.getElementById('ewImages');
+    if (ta) { ta.value = paths.join('\n'); ta.style.borderColor = 'rgba(0,238,221,0.7)'; setTimeout(() => { ta.style.borderColor = ''; }, 1200); }
+    renderEWImgPreview();
+  }
+
+  // ── Live Image Preview ────────────────────────────────────────────
+  function renderEWImgPreview() {
+    const urls = (document.getElementById('ewImages')?.value || '')
+      .split('\n').map(s => ewNormPath(s)).filter(Boolean);
+    const box = document.getElementById('ewImgPreview');
+    if (!box) return;
+    if (!urls.length) { box.innerHTML = ''; return; }
+    box.innerHTML = urls.map(url => {
+      const safe = url.replace(/"/g, '%22');
+      return `<div style="position:relative;width:64px;height:64px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);flex-shrink:0;background:rgba(255,255,255,0.04)">
+        <img src="${safe}" style="width:100%;height:100%;object-fit:cover" loading="lazy"
+             onerror="this.parentElement.style.opacity='.3';this.style.display='none'" />
+      </div>`;
+    }).join('');
+  }
+
   function hexRgba(hex, a) {
     const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
     return `rgba(${r},${g},${b},${a})`;
@@ -315,6 +514,10 @@
     document.getElementById('ewFiles').value   = (w.files   || []).map(f => f.name + '|' + f.url).join('\n');
     document.getElementById('ewTags').value    = (w.tags    || []).join(', ');
     document.getElementById('ewContent').value = w.content || '';
+    // Reset image lib state so it re-syncs to current images
+    _ewThumbCache = null; _ewContentCache = null; _ewContentSel = new Set();
+    ['ewThumbLib','ewContentLib'].forEach(id => { const p = document.getElementById(id); if (p) p.style.display = 'none'; });
+    renderEWImgPreview();
     document.getElementById('workEditModal').classList.add('open');
     document.getElementById('workEditBackdrop').classList.add('open');
   }
@@ -322,6 +525,7 @@
   function closeEditWork() {
     document.getElementById('workEditModal').classList.remove('open');
     document.getElementById('workEditBackdrop').classList.remove('open');
+    ['ewThumbLib','ewContentLib'].forEach(id => { const p = document.getElementById(id); if (p) p.style.display = 'none'; });
   }
 
   document.getElementById('workEditForm').addEventListener('submit', e => {
@@ -331,10 +535,10 @@
     const data = {
       title:   document.getElementById('ewTitle').value.trim(),
       titleEn: document.getElementById('ewTitleEn').value.trim(),
-      thumb:   document.getElementById('ewThumb').value.trim(),
+      thumb:   ewNormPath(document.getElementById('ewThumb').value),
       desc:    document.getElementById('ewDesc').value.trim(),
       descEn:  document.getElementById('ewDescEn').value.trim(),
-      images:  document.getElementById('ewImages').value.split('\n').map(s => s.trim()).filter(Boolean),
+      images:  document.getElementById('ewImages').value.split('\n').map(s => ewNormPath(s)).filter(Boolean),
       videos:  document.getElementById('ewVideos').value.split('\n').map(s => s.trim()).filter(Boolean),
       files:   parseFileList(document.getElementById('ewFiles').value),
       content: document.getElementById('ewContent').value.trim(),
