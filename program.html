@@ -121,8 +121,50 @@
           <input type="color" id="pColor" value="#00eedd" />
         </div>
         <div class="prog-field">
-          <label>圖片 URLs（每行一個）</label>
-          <textarea id="pImages" placeholder="https://example.com/image1.jpg" rows="4"></textarea>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label style="margin-bottom:0">縮圖 URL THUMBNAIL</label>
+            <button type="button" onclick="normField('pThumb')"
+              style="font-size:10px;padding:2px 8px;background:rgba(0,238,221,0.08);border:1px solid rgba(0,238,221,0.25);border-radius:4px;color:#00eedd;cursor:pointer;white-space:nowrap">
+              整理路徑 ↺
+            </button>
+          </div>
+          <input type="text" id="pThumb"
+            placeholder="image/project1/cover.jpg 或貼上完整路徑自動轉換"
+            onpaste="setTimeout(()=>normField('pThumb'),0)"
+            onblur="smartThumb('pThumb')" />
+          <!-- Thumbnail Library -->
+          <div class="thumb-lib">
+            <button type="button" class="thumb-lib-btn" onclick="toggleThumbLib('pThumb','pThumbLib')">
+              📷 從縮圖庫選取 Pick from Gallery
+            </button>
+            <div id="pThumbLib" class="thumb-lib-panel" style="display:none"></div>
+          </div>
+        </div>
+        <!-- ── 資料夾快速導入 ── -->
+        <div class="folder-scanner">
+          <div class="fs-header">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            從本地資料夾導入圖片 Import from Local Folder
+          </div>
+          <div class="fs-input-row">
+            <input type="text" id="pFolderPath" class="fs-path-input" placeholder="image/project1/" autocomplete="off" />
+            <button type="button" class="btn btn-outline btn-sm" onclick="scanProjFolder()">掃描 Scan</button>
+          </div>
+          <div id="pFolderResult" class="fs-result"></div>
+        </div>
+
+        <div class="prog-field">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label style="margin-bottom:0">圖片 URLS（每行一個）</label>
+            <button type="button" onclick="normField('pImages')"
+              style="font-size:10px;padding:2px 8px;background:rgba(0,238,221,0.08);border:1px solid rgba(0,238,221,0.25);border-radius:4px;color:#00eedd;cursor:pointer;white-space:nowrap">
+              整理路徑 ↺
+            </button>
+          </div>
+          <textarea id="pImages"
+            placeholder="https://example.com/image1.jpg&#10;image/project1/photo.jpg"
+            rows="4"
+            onpaste="setTimeout(()=>normField('pImages'),0)"></textarea>
         </div>
         <div class="prog-field">
           <label>詳細內容 Content（HTML 可用）</label>
@@ -168,6 +210,196 @@
   <script src="jiaxin-core.js"></script>
   <script src="loader.js"></script>
   <script>
+  // ── Path Normalizer ────────────────────────────────────────────────
+  let _projectRoot = '';
+  fetch('/api/root').then(r => r.json()).then(d => {
+    _projectRoot = (d.root || '').replace(/\\+/g, '/').replace(/\/+$/, '');
+  }).catch(() => {});
+
+  function normalizePath(raw) {
+    const p = (raw || '').trim();
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    let s = p.replace(/\\/g, '/');
+    // Strip known project root if loaded
+    if (_projectRoot) {
+      const root = _projectRoot.replace(/\\+/g, '/').replace(/\/+$/, '');
+      if (s.toLowerCase().startsWith(root.toLowerCase()))
+        return s.slice(root.length).replace(/^\/+/, '');
+    }
+    // Fallback: strip absolute Windows path up to and including the project folder
+    const m = s.match(/^[A-Za-z]:\/(?:[^\/]+\/)*?claudecode\/(.+)$/i);
+    if (m) return m[1];
+    return s;
+  }
+
+  function normalizeLines(text) {
+    return (text || '').split('\n').map(l => normalizePath(l)).filter(Boolean).join('\n');
+  }
+
+  function normField(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = el.tagName === 'TEXTAREA' ? normalizeLines(el.value) : normalizePath(el.value);
+    el.style.borderColor = 'rgba(0,238,221,0.6)';
+    setTimeout(() => { el.style.borderColor = ''; }, 900);
+  }
+
+  // If thumb value has no image extension, treat as folder and auto-pick first image
+  async function smartThumb(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let val = normalizePath(el.value);
+    if (!val || /^https?:\/\//i.test(val)) { el.value = val; return; }
+    if (!/\.(jpg|jpeg|png|gif|webp|svg|avif|bmp)$/i.test(val)) {
+      try {
+        const r = await fetch('/api/list-images?path=' + encodeURIComponent(val.replace(/\/?$/, '')));
+        const d = await r.json();
+        if (d.images && d.images.length) val = d.images[0].path;
+      } catch {}
+    }
+    if (el.value !== val) {
+      el.value = val;
+      el.style.borderColor = 'rgba(0,238,221,0.6)';
+      setTimeout(() => { el.style.borderColor = ''; }, 900);
+    }
+  }
+
+  // ── Folder Scanner (Proj) ─────────────────────────────────────────
+  let _pfsImages = [], _pfsSel = new Set();
+
+  async function scanProjFolder() {
+    const raw = (document.getElementById('pFolderPath').value || '').trim().replace(/^\/+/, '');
+    const out = document.getElementById('pFolderResult');
+    if (!raw) { out.innerHTML = '<div class="fs-status err">請輸入資料夾路徑</div>'; return; }
+    out.innerHTML = '<div class="fs-status">⟳ 掃描中…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=' + encodeURIComponent(raw));
+      const d = await r.json();
+      if (!d.images || !d.images.length) {
+        out.innerHTML = '<div class="fs-status">📂 資料夾內找不到圖片（支援 jpg / png / gif / webp / svg）</div>';
+        return;
+      }
+      _pfsImages = d.images;
+      _pfsSel = new Set(_pfsImages.map((_,i) => i));
+      _renderPFS();
+    } catch(e) {
+      out.innerHTML = `<div class="fs-status err">❌ ${e.message || '無法連線至伺服器'}</div>`;
+    }
+  }
+
+  function _renderPFS() {
+    const grid = _pfsImages.map((img, i) => `
+      <div class="fs-img ${_pfsSel.has(i) ? 'sel' : ''}"
+           onclick="pfsToggle(${i})" title="${img.name}">
+        <img src="${img.url}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'" />
+        ${_pfsSel.has(i) ? '<span class="fs-check-badge">✓</span>' : ''}
+        <span class="fs-img-name">${img.name}</span>
+      </div>`).join('');
+    document.getElementById('pFolderResult').innerHTML = `
+      <div class="fs-status">✓ 找到 ${_pfsImages.length} 張圖片</div>
+      <div class="fs-grid">${grid}</div>
+      <div class="fs-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="pfsApply()">✓ 套用至圖片欄位</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="pfsAll()">全選</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="pfsClear()">取消全選</button>
+      </div>
+      <div class="fs-hint">單擊 = 選取／取消</div>`;
+  }
+
+  function pfsToggle(i) {
+    if (_pfsSel.has(i)) _pfsSel.delete(i); else _pfsSel.add(i);
+    _renderPFS();
+  }
+  function pfsAll()   { _pfsSel = new Set(_pfsImages.map((_,i)=>i)); _renderPFS(); }
+  function pfsClear() { _pfsSel = new Set(); _renderPFS(); }
+
+  function pfsApply() {
+    if (!_pfsImages.length) return;
+    const sel = [..._pfsSel].sort((a,b) => a-b);
+    const paths = sel.map(i => _pfsImages[i].path);
+    // Auto-fill thumbnail with first selected image if thumb is empty
+    const thumbEl = document.getElementById('pThumb');
+    if (thumbEl && !thumbEl.value.trim() && paths.length) {
+      thumbEl.value = paths[0];
+      thumbEl.style.borderColor = 'rgba(0,238,221,0.7)';
+      setTimeout(() => { thumbEl.style.borderColor = ''; }, 1200);
+    }
+    const ta = document.getElementById('pImages');
+    ta.value = paths.join('\n');
+    ta.style.borderColor = 'rgba(0,238,221,0.7)';
+    setTimeout(() => { ta.style.borderColor = ''; }, 1200);
+  }
+
+  // ── Thumbnail Library (image/img) ────────────────────────────────
+  let _thumbLibCache = null;
+
+  async function toggleThumbLib(targetId, panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    if (_thumbLibCache === null) {
+      panel.innerHTML = '<div class="fs-status">⟳ 載入縮圖庫…</div>';
+      try {
+        const r = await fetch('/api/list-images?path=image/img');
+        const d = await r.json();
+        _thumbLibCache = d.images || [];
+      } catch { _thumbLibCache = []; }
+    }
+    renderThumbLib(targetId, panelId);
+  }
+
+  async function refreshThumbLib(targetId, panelId) {
+    _thumbLibCache = null;
+    const panel = document.getElementById(panelId);
+    if (panel) panel.innerHTML = '<div class="fs-status">⟳ 重新整理…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=image/img');
+      const d = await r.json();
+      _thumbLibCache = d.images || [];
+    } catch { _thumbLibCache = []; }
+    renderThumbLib(targetId, panelId);
+  }
+
+  function renderThumbLib(targetId, panelId) {
+    const panel = document.getElementById(panelId);
+    const curVal = (document.getElementById(targetId)?.value || '').trim();
+    if (!_thumbLibCache?.length) {
+      panel.innerHTML = `
+        <div class="thumb-lib-header">
+          <span class="fs-status" style="margin:0">📂 縮圖庫尚無圖片（請將圖片加入 image/img 資料夾）</span>
+          <button type="button" class="thumb-lib-refresh" onclick="refreshThumbLib('${targetId}','${panelId}')">↺ 重新整理</button>
+        </div>`;
+      return;
+    }
+    panel.innerHTML = `
+      <div class="thumb-lib-header">
+        <span class="fs-status" style="margin:0">縮圖庫 — ${_thumbLibCache.length} 張圖片</span>
+        <button type="button" class="thumb-lib-refresh" onclick="refreshThumbLib('${targetId}','${panelId}')">↺ 重新整理</button>
+      </div>
+      <div class="fs-grid">
+        ${_thumbLibCache.map(img => `
+          <div class="fs-img ${img.path === curVal ? 'thumb' : ''}"
+               onclick="pickThumb('${img.path}','${targetId}','${panelId}')"
+               title="${img.name}">
+            <img src="${img.url}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'" />
+            ${img.path === curVal ? '<span class="fs-thumb-badge">已選</span>' : ''}
+            <span class="fs-img-name">${img.name}</span>
+          </div>`).join('')}
+      </div>
+      <div class="fs-hint">單擊圖片以設為縮圖</div>`;
+  }
+
+  function pickThumb(path, targetId, panelId) {
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.value = path;
+      el.style.borderColor = 'rgba(0,238,221,0.7)';
+      setTimeout(() => { el.style.borderColor = ''; }, 1200);
+    }
+    renderThumbLib(targetId, panelId);
+  }
+
   // ── Program Page Logic ────────────────────────────────────────────
 
   // Convert hex color to rgba string
@@ -286,8 +518,9 @@
     document.getElementById('pDescEn').value   = proj.descriptionEn || '';
     document.getElementById('pTags').value     = (proj.tags||[]).join(', ');
     document.getElementById('pColor').value    = proj.color || '#00aaff';
-    document.getElementById('pImages').value   = (proj.images||[]).join('\n');
-    document.getElementById('pContent').value  = proj.content || '';
+    document.getElementById('pThumb').value   = proj.thumb  || '';
+    document.getElementById('pImages').value  = (proj.images||[]).join('\n');
+    document.getElementById('pContent').value = proj.content || '';
     document.getElementById('projModal').classList.add('open');
     document.getElementById('projModalBackdrop').classList.add('open');
   }
@@ -306,9 +539,10 @@
       description:     document.getElementById('pDesc').value.trim(),
       descriptionEn:   document.getElementById('pDescEn').value.trim(),
       tags:            document.getElementById('pTags').value.split(',').map(s=>s.trim()).filter(Boolean),
-      color:           document.getElementById('pColor').value,
-      images:          document.getElementById('pImages').value.split('\n').map(s=>s.trim()).filter(Boolean),
-      content:         document.getElementById('pContent').value.trim(),
+      color:   document.getElementById('pColor').value,
+      thumb:   normalizePath(document.getElementById('pThumb').value),
+      images:  normalizeLines(document.getElementById('pImages').value).split('\n').map(s=>s.trim()).filter(Boolean),
+      content: document.getElementById('pContent').value.trim(),
     };
     if (editId) projUpdate(editId, data);
     else        projAdd(data);

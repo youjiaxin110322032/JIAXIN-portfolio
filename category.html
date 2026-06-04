@@ -97,9 +97,38 @@
             <input type="text" id="wTitleEn" placeholder="Promo Video" />
           </div>
         </div>
+        <!-- ── 資料夾快速導入 ── -->
+        <div class="folder-scanner">
+          <div class="fs-header">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            從本地資料夾導入圖片 Import from Local Folder
+          </div>
+          <div class="fs-input-row">
+            <input type="text" id="wFolderPath" class="fs-path-input" placeholder="image/project1/" autocomplete="off" />
+            <button type="button" class="btn btn-outline btn-sm" onclick="scanWorkFolder()">掃描 Scan</button>
+          </div>
+          <div id="wFolderResult" class="fs-result"></div>
+        </div>
+
         <div class="prog-field">
-          <label>縮圖 URL Thumbnail</label>
-          <input type="url" id="wThumb" placeholder="https://example.com/thumb.jpg" />
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label style="margin-bottom:0">縮圖 URL THUMBNAIL</label>
+            <button type="button" onclick="normField('wThumb')"
+              style="font-size:10px;padding:2px 8px;background:rgba(0,238,221,0.08);border:1px solid rgba(0,238,221,0.25);border-radius:4px;color:#00eedd;cursor:pointer;white-space:nowrap">
+              整理路徑 ↺
+            </button>
+          </div>
+          <input type="text" id="wThumb"
+            placeholder="image/Quason/photo.jpg 或貼上完整路徑自動轉換"
+            onpaste="setTimeout(()=>normField('wThumb'),0)"
+            onblur="smartThumb('wThumb')" />
+          <!-- Thumbnail Library -->
+          <div class="thumb-lib">
+            <button type="button" class="thumb-lib-btn" onclick="toggleThumbLib('wThumb','wThumbLib')">
+              📷 從縮圖庫選取 Pick from Gallery
+            </button>
+            <div id="wThumbLib" class="thumb-lib-panel" style="display:none"></div>
+          </div>
         </div>
         <div class="prog-field-row">
           <div class="prog-field">
@@ -112,8 +141,24 @@
           </div>
         </div>
         <div class="prog-field">
-          <label>圖片 URLs（每行一個）</label>
-          <textarea id="wImages" placeholder="https://example.com/image1.jpg" rows="4"></textarea>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label style="margin-bottom:0">圖片 URLS（每行一個）</label>
+            <button type="button" onclick="normField('wImages')"
+              style="font-size:10px;padding:2px 8px;background:rgba(0,238,221,0.08);border:1px solid rgba(0,238,221,0.25);border-radius:4px;color:#00eedd;cursor:pointer;white-space:nowrap">
+              整理路徑 ↺
+            </button>
+          </div>
+          <textarea id="wImages"
+            placeholder="https://example.com/image1.jpg&#10;image/Quason/merck1.jpg"
+            rows="4"
+            onpaste="setTimeout(()=>normField('wImages'),0)"></textarea>
+          <!-- Content Image Library -->
+          <div class="thumb-lib">
+            <button type="button" class="thumb-lib-btn" onclick="toggleContentLib('wContentLib')">
+              🖼 從內文圖庫選取 Pick from Content Gallery
+            </button>
+            <div id="wContentLib" class="thumb-lib-panel" style="display:none"></div>
+          </div>
         </div>
         <div class="prog-field">
           <label>影音連結 Videos（每行一個，YouTube / Vimeo）</label>
@@ -171,6 +216,287 @@
   <script src="jiaxin-core.js"></script>
   <script src="loader.js"></script>
   <script>
+  // ── Path Normalizer ────────────────────────────────────────────────
+  let _projectRoot = '';
+  fetch('/api/root').then(r => r.json()).then(d => {
+    _projectRoot = (d.root || '').replace(/\\+/g, '/').replace(/\/+$/, '');
+  }).catch(() => {});
+
+  function normalizePath(raw) {
+    const p = (raw || '').trim();
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    let s = p.replace(/\\/g, '/');
+    if (_projectRoot) {
+      const root = _projectRoot.replace(/\\+/g, '/').replace(/\/+$/, '');
+      if (s.toLowerCase().startsWith(root.toLowerCase()))
+        return s.slice(root.length).replace(/^\/+/, '');
+    }
+    // Fallback: strip Windows absolute path by finding project folder name
+    const m = s.match(/^[A-Za-z]:\/(?:[^\/]+\/)*?claudecode\/(.+)$/i);
+    if (m) return m[1];
+    return s;
+  }
+
+  function normalizeLines(text) {
+    return (text || '').split('\n').map(l => normalizePath(l)).filter(Boolean).join('\n');
+  }
+
+  function normField(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = el.tagName === 'TEXTAREA' ? normalizeLines(el.value) : normalizePath(el.value);
+    el.style.borderColor = 'rgba(0,238,221,0.6)';
+    setTimeout(() => { el.style.borderColor = ''; }, 900);
+  }
+
+  // If thumb value has no image extension, treat as folder and auto-pick first image
+  async function smartThumb(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let val = normalizePath(el.value);
+    if (!val || /^https?:\/\//i.test(val)) { el.value = val; return; }
+    if (!/\.(jpg|jpeg|png|gif|webp|svg|avif|bmp)$/i.test(val)) {
+      try {
+        const r = await fetch('/api/list-images?path=' + encodeURIComponent(val.replace(/\/?$/, '')));
+        const d = await r.json();
+        if (d.images && d.images.length) val = d.images[0].path;
+      } catch {}
+    }
+    if (el.value !== val) {
+      el.value = val;
+      el.style.borderColor = 'rgba(0,238,221,0.6)';
+      setTimeout(() => { el.style.borderColor = ''; }, 900);
+    }
+  }
+
+  // ── Folder Scanner ────────────────────────────────────────────────
+  let _fsImages = [], _fsThumbIdx = 0, _fsSel = new Set();
+
+  async function scanWorkFolder() {
+    const raw = (document.getElementById('wFolderPath').value || '').trim().replace(/^\/+/, '');
+    const out = document.getElementById('wFolderResult');
+    if (!raw) { out.innerHTML = '<div class="fs-status err">請輸入資料夾路徑</div>'; return; }
+    out.innerHTML = '<div class="fs-status">⟳ 掃描中…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=' + encodeURIComponent(raw));
+      const d = await r.json();
+      if (!d.images || !d.images.length) {
+        out.innerHTML = '<div class="fs-status">📂 資料夾內找不到圖片（支援 jpg / png / gif / webp / svg）</div>';
+        return;
+      }
+      _fsImages = d.images;
+      _fsThumbIdx = 0;
+      _fsSel = new Set(_fsImages.map((_,i) => i));
+      _renderFS();
+    } catch(e) {
+      out.innerHTML = `<div class="fs-status err">❌ ${e.message || '無法連線至伺服器，請確認 serve.mjs 正在執行'}</div>`;
+    }
+  }
+
+  function _renderFS() {
+    const grid = _fsImages.map((img, i) => `
+      <div class="fs-img ${_fsSel.has(i) ? 'sel' : ''} ${i === _fsThumbIdx ? 'thumb' : ''}"
+           onclick="fsToggle(${i})" ondblclick="fsSetThumb(${i})" title="${img.name}">
+        <img src="${img.url}" alt="${img.name}" loading="lazy"
+             onerror="this.style.display='none'" />
+        ${i === _fsThumbIdx ? '<span class="fs-thumb-badge">縮圖</span>' : ''}
+        ${_fsSel.has(i) && i !== _fsThumbIdx ? '<span class="fs-check-badge">✓</span>' : ''}
+        <span class="fs-img-name">${img.name}</span>
+      </div>`).join('');
+    document.getElementById('wFolderResult').innerHTML = `
+      <div class="fs-status">✓ 找到 ${_fsImages.length} 張圖片</div>
+      <div class="fs-grid">${grid}</div>
+      <div class="fs-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="fsApply()">✓ 套用至作品欄位</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="fsSelectAll()">全選</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="fsClearSel()">取消全選</button>
+      </div>
+      <div class="fs-hint">單擊 = 選取／取消 &nbsp;·&nbsp; 雙擊 = 設為縮圖</div>`;
+  }
+
+  function fsToggle(i) {
+    if (i === _fsThumbIdx) return;
+    if (_fsSel.has(i)) _fsSel.delete(i); else _fsSel.add(i);
+    _renderFS();
+  }
+  function fsSetThumb(i) { _fsThumbIdx = i; _fsSel.add(i); _renderFS(); }
+  function fsSelectAll()  { _fsSel = new Set(_fsImages.map((_,i) => i)); _renderFS(); }
+  function fsClearSel()   { _fsSel = new Set([_fsThumbIdx]); _renderFS(); }
+
+  function fsApply() {
+    if (!_fsImages.length) return;
+    const thumbEl = document.getElementById('wThumb');
+    thumbEl.value = _fsImages[_fsThumbIdx].path;
+    const paths = [..._fsSel].sort((a,b)=>a-b).map(i => _fsImages[i].path);
+    document.getElementById('wImages').value = paths.join('\n');
+    ['wThumb','wImages'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.borderColor = 'rgba(0,238,221,0.7)';
+      setTimeout(() => { el.style.borderColor = ''; }, 1200);
+    });
+  }
+
+  // ── Thumbnail Library (image/img) ────────────────────────────────
+  let _thumbLibCache = null;
+
+  async function toggleThumbLib(targetId, panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    if (_thumbLibCache === null) {
+      panel.innerHTML = '<div class="fs-status">⟳ 載入縮圖庫…</div>';
+      try {
+        const r = await fetch('/api/list-images?path=image/img');
+        const d = await r.json();
+        _thumbLibCache = d.images || [];
+      } catch { _thumbLibCache = []; }
+    }
+    renderThumbLib(targetId, panelId);
+  }
+
+  async function refreshThumbLib(targetId, panelId) {
+    _thumbLibCache = null;
+    const panel = document.getElementById(panelId);
+    if (panel) panel.innerHTML = '<div class="fs-status">⟳ 重新整理…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=image/img');
+      const d = await r.json();
+      _thumbLibCache = d.images || [];
+    } catch { _thumbLibCache = []; }
+    renderThumbLib(targetId, panelId);
+  }
+
+  function renderThumbLib(targetId, panelId) {
+    const panel = document.getElementById(panelId);
+    const curVal = (document.getElementById(targetId)?.value || '').trim();
+    if (!_thumbLibCache?.length) {
+      panel.innerHTML = `
+        <div class="thumb-lib-header">
+          <span class="fs-status" style="margin:0">📂 縮圖庫尚無圖片（請將圖片加入 image/img 資料夾）</span>
+          <button type="button" class="thumb-lib-refresh" onclick="refreshThumbLib('${targetId}','${panelId}')">↺ 重新整理</button>
+        </div>`;
+      return;
+    }
+    panel.innerHTML = `
+      <div class="thumb-lib-header">
+        <span class="fs-status" style="margin:0">縮圖庫 — ${_thumbLibCache.length} 張圖片</span>
+        <button type="button" class="thumb-lib-refresh" onclick="refreshThumbLib('${targetId}','${panelId}')">↺ 重新整理</button>
+      </div>
+      <div class="fs-grid">
+        ${_thumbLibCache.map(img => `
+          <div class="fs-img ${img.path === curVal ? 'thumb' : ''}"
+               onclick="pickThumb('${img.path}','${targetId}','${panelId}')"
+               title="${img.name}">
+            <img src="${img.url}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'" />
+            ${img.path === curVal ? '<span class="fs-thumb-badge">已選</span>' : ''}
+            <span class="fs-img-name">${img.name}</span>
+          </div>`).join('')}
+      </div>
+      <div class="fs-hint">單擊圖片以設為縮圖</div>`;
+  }
+
+  function pickThumb(path, targetId, panelId) {
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.value = path;
+      el.style.borderColor = 'rgba(0,238,221,0.7)';
+      setTimeout(() => { el.style.borderColor = ''; }, 1200);
+    }
+    renderThumbLib(targetId, panelId);
+  }
+
+  // ── Content Image Library (image/contentimg) ──────────────────────
+  let _contentLibCache = null;
+  let _contentLibSel = new Set();
+
+  async function toggleContentLib(panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    if (_contentLibCache === null) {
+      panel.innerHTML = '<div class="fs-status">⟳ 載入內文圖庫…</div>';
+      try {
+        const r = await fetch('/api/list-images?path=image/contentimg');
+        const d = await r.json();
+        _contentLibCache = d.images || [];
+        // Pre-select only images already listed in wImages (edit mode sync)
+        const _existingPaths = new Set(
+          (document.getElementById('wImages')?.value || '')
+            .split('\n').map(s => s.trim()).filter(Boolean)
+        );
+        _contentLibSel = new Set(
+          _contentLibCache.map((img, i) => _existingPaths.has(img.path) ? i : -1).filter(i => i >= 0)
+        );
+      } catch { _contentLibCache = []; }
+    }
+    renderContentLib(panelId);
+  }
+
+  async function refreshContentLib(panelId) {
+    _contentLibCache = null;
+    _contentLibSel = new Set();
+    const panel = document.getElementById(panelId);
+    if (panel) panel.innerHTML = '<div class="fs-status">⟳ 重新整理…</div>';
+    try {
+      const r = await fetch('/api/list-images?path=image/contentimg');
+      const d = await r.json();
+      _contentLibCache = d.images || [];
+      _contentLibSel = new Set(_contentLibCache.map((_,i) => i));
+    } catch { _contentLibCache = []; }
+    renderContentLib(panelId);
+  }
+
+  function renderContentLib(panelId) {
+    const panel = document.getElementById(panelId);
+    if (!_contentLibCache?.length) {
+      panel.innerHTML = `
+        <div class="thumb-lib-header">
+          <span class="fs-status" style="margin:0">📂 內文圖庫尚無圖片（請將圖片加入 image/contentimg 資料夾）</span>
+          <button type="button" class="thumb-lib-refresh" onclick="refreshContentLib('${panelId}')">↺ 重新整理</button>
+        </div>`;
+      return;
+    }
+    const grid = _contentLibCache.map((img, i) => `
+      <div class="fs-img ${_contentLibSel.has(i) ? 'sel' : ''}"
+           onclick="contentLibToggle(${i},'${panelId}')" title="${img.name}">
+        <img src="${img.url}" alt="${img.name}" loading="lazy" onerror="this.style.display='none'" />
+        ${_contentLibSel.has(i) ? '<span class="fs-check-badge">✓</span>' : ''}
+        <span class="fs-img-name">${img.name}</span>
+      </div>`).join('');
+    panel.innerHTML = `
+      <div class="thumb-lib-header">
+        <span class="fs-status" style="margin:0">內文圖庫 — ${_contentLibCache.length} 張圖片</span>
+        <button type="button" class="thumb-lib-refresh" onclick="refreshContentLib('${panelId}')">↺ 重新整理</button>
+      </div>
+      <div class="fs-grid">${grid}</div>
+      <div class="fs-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="contentLibApply('wImages','${panelId}')">✓ 套用至圖片欄位</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="contentLibAll('${panelId}')">全選</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="contentLibClear('${panelId}')">取消全選</button>
+      </div>
+      <div class="fs-hint">單擊 = 選取／取消 &nbsp;·&nbsp; 套用後會取代圖片欄位現有內容</div>`;
+  }
+
+  function contentLibToggle(i, panelId) {
+    if (_contentLibSel.has(i)) _contentLibSel.delete(i); else _contentLibSel.add(i);
+    renderContentLib(panelId);
+  }
+  function contentLibAll(panelId)   { _contentLibSel = new Set(_contentLibCache.map((_,i)=>i)); renderContentLib(panelId); }
+  function contentLibClear(panelId) { _contentLibSel = new Set(); renderContentLib(panelId); }
+
+  function contentLibApply(targetId, panelId) {
+    if (!_contentLibCache?.length) return;
+    const paths = [..._contentLibSel].sort((a,b) => a-b).map(i => _contentLibCache[i].path);
+    const ta = document.getElementById(targetId);
+    if (ta) {
+      ta.value = paths.join('\n');
+      ta.style.borderColor = 'rgba(0,238,221,0.7)';
+      setTimeout(() => { ta.style.borderColor = ''; }, 1200);
+    }
+  }
+
   // ── Category Page Logic ───────────────────────────────────────────
 
   function hexRgba(hex, a) {
@@ -310,6 +636,9 @@
     document.getElementById('workSaveBtn').textContent    = '新增';
     document.getElementById('workEditId').value = '';
     document.getElementById('workForm').reset();
+    _contentLibCache = null; _contentLibSel = new Set();
+    const _clp = document.getElementById('wContentLib');
+    if (_clp) _clp.style.display = 'none';
     document.getElementById('workModal').classList.add('open');
     document.getElementById('workModalBackdrop').classList.add('open');
   }
@@ -325,11 +654,15 @@
     document.getElementById('wThumb').value      = w.thumb   || '';
     document.getElementById('wDesc').value       = w.desc    || '';
     document.getElementById('wDescEn').value     = w.descEn  || '';
-    document.getElementById('wImages').value     = (w.images || []).join('\n');
-    document.getElementById('wVideos').value     = (w.videos || []).join('\n');
+    document.getElementById('wImages').value  = (w.images || []).join('\n');
+    document.getElementById('wVideos').value  = (w.videos || []).join('\n');
     document.getElementById('wFiles').value      = (w.files  || []).map(f => f.name + '|' + f.url).join('\n');
     document.getElementById('wTags').value       = (w.tags   || []).join(', ');
     document.getElementById('wContent').value    = w.content || '';
+    // Reset content lib so it re-syncs to this work's images on next open
+    _contentLibCache = null; _contentLibSel = new Set();
+    const _clp = document.getElementById('wContentLib');
+    if (_clp) _clp.style.display = 'none';
     document.getElementById('workModal').classList.add('open');
     document.getElementById('workModalBackdrop').classList.add('open');
   }
@@ -337,6 +670,8 @@
   function closeWorkModal() {
     document.getElementById('workModal').classList.remove('open');
     document.getElementById('workModalBackdrop').classList.remove('open');
+    const _clp = document.getElementById('wContentLib');
+    if (_clp) _clp.style.display = 'none';
   }
 
   document.getElementById('workForm').addEventListener('submit', e => {
@@ -349,10 +684,10 @@
     const data = {
       title:   document.getElementById('wTitle').value.trim(),
       titleEn: document.getElementById('wTitleEn').value.trim(),
-      thumb:   document.getElementById('wThumb').value.trim(),
+      thumb:   normalizePath(document.getElementById('wThumb').value),
       desc:    document.getElementById('wDesc').value.trim(),
       descEn:  document.getElementById('wDescEn').value.trim(),
-      images:  document.getElementById('wImages').value.split('\n').map(s => s.trim()).filter(Boolean),
+      images:  normalizeLines(document.getElementById('wImages').value).split('\n').map(s => s.trim()).filter(Boolean),
       videos:  document.getElementById('wVideos').value.split('\n').map(s => s.trim()).filter(Boolean),
       files:   parseFileList(document.getElementById('wFiles').value),
       tags:    tagsArr,

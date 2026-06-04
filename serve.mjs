@@ -1,5 +1,5 @@
 import { createServer } from 'http';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile, readdir } from 'fs/promises';
 import { extname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -30,6 +30,37 @@ createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
+
+  // GET /api/root → return project root directory (for client-side path normalization)
+  if (req.method === 'GET' && req.url === '/api/root') {
+    const rootFwd = __dirname.replace(/\\/g, '/').replace(/\/+$/, '');
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ root: rootFwd }));
+    return;
+  }
+
+  // GET /api/list-images?path=image/project1 → return image filenames in directory
+  if (req.method === 'GET' && req.url.startsWith('/api/list-images')) {
+    const qPath = new URL(req.url, 'http://localhost').searchParams.get('path') || '';
+    // Strip leading slash and block path traversal
+    const safePath = qPath.replace(/\.\./g, '').replace(/^\/+/, '');
+    const dirPath = join(__dirname, safePath);
+    try {
+      const files = await readdir(dirPath);
+      const IMG_EXTS = new Set(['.jpg','.jpeg','.png','.gif','.webp','.svg','.avif','.bmp']);
+      const base = safePath.replace(/\/?$/, '/');
+      const images = files
+        .filter(f => IMG_EXTS.has(extname(f).toLowerCase()))
+        .sort()
+        .map(name => ({ name, path: base + name, url: '/' + base + name }));
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ images }));
+    } catch {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ images: [], error: 'directory not found' }));
+    }
+    return;
+  }
 
   // POST /api/sync-data → write data to _data.json for code persistence
   if (req.method === 'POST' && req.url === '/api/sync-data') {
