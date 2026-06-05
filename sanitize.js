@@ -11,15 +11,21 @@ function sanitizeHTML(str) {
 }
 
 /**
- * 驗證 URL 只允許 https:// 開頭（防止 javascript: 等惡意協定）。
+ * 驗證 URL：允許 https/http 絕對 URL 及安全的相對路徑（image/...）。
+ * 封鎖 javascript:、vbscript:、data: 及 protocol-relative（//...）。
  * 用於 img src、a href、iframe src 等屬性。
  * @returns 安全的 URL 字串，若不符則回傳空字串。
  */
 function sanitizeURL(str) {
   const s = String(str ?? '').trim();
   if (!s) return '';
-  if (!/^https?:\/\/.{3,}/.test(s)) return '';
-  return s;
+  // Block dangerous protocols
+  if (/^(javascript|vbscript|data):/i.test(s)) return '';
+  // Allow absolute https/http URLs
+  if (/^https?:\/\/.{3,}/.test(s)) return s;
+  // Allow relative paths — must not start with // (protocol-relative) and must not contain ://
+  if (!s.startsWith('//') && !s.includes('://')) return s;
+  return '';
 }
 
 /**
