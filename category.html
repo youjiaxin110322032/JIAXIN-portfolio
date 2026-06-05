@@ -151,7 +151,8 @@
           <textarea id="wImages"
             placeholder="https://example.com/image1.jpg&#10;image/Quason/merck1.jpg"
             rows="4"
-            onpaste="setTimeout(()=>normField('wImages'),0)"></textarea>
+            onpaste="setTimeout(()=>normField('wImages'),0)"
+            oninput="renderWImgPreview()"></textarea>
           <!-- Content Image Library -->
           <div class="thumb-lib">
             <button type="button" class="thumb-lib-btn" onclick="toggleContentLib('wContentLib')">
@@ -159,6 +160,8 @@
             </button>
             <div id="wContentLib" class="thumb-lib-panel" style="display:none"></div>
           </div>
+          <!-- Live preview -->
+          <div id="wImgPreview" class="img-preview-grid"></div>
         </div>
         <div class="prog-field">
           <label>影音連結 Videos（每行一個，YouTube / Vimeo）</label>
@@ -482,9 +485,10 @@
   function contentLibToggle(i, panelId) {
     if (_contentLibSel.has(i)) _contentLibSel.delete(i); else _contentLibSel.add(i);
     renderContentLib(panelId);
+    _previewWFromGallery();
   }
-  function contentLibAll(panelId)   { _contentLibSel = new Set(_contentLibCache.map((_,i)=>i)); renderContentLib(panelId); }
-  function contentLibClear(panelId) { _contentLibSel = new Set(); renderContentLib(panelId); }
+  function contentLibAll(panelId)   { _contentLibSel = new Set(_contentLibCache.map((_,i)=>i)); renderContentLib(panelId); _previewWFromGallery(); }
+  function contentLibClear(panelId) { _contentLibSel = new Set(); renderContentLib(panelId); _previewWFromGallery(); }
 
   function contentLibApply(targetId, panelId) {
     if (!_contentLibCache?.length) return;
@@ -495,6 +499,30 @@
       ta.style.borderColor = 'rgba(0,238,221,0.7)';
       setTimeout(() => { ta.style.borderColor = ''; }, 1200);
     }
+    _previewWUrls(paths);
+  }
+
+  function _previewWFromGallery() {
+    if (!_contentLibCache) return;
+    const paths = [..._contentLibSel].sort((a,b)=>a-b).map(i => _contentLibCache[i].path);
+    _previewWUrls(paths);
+  }
+
+  function renderWImgPreview() {
+    const urls = (document.getElementById('wImages')?.value || '')
+      .split('\n').map(s => normalizePath(s)).filter(Boolean);
+    _previewWUrls(urls);
+  }
+
+  function _previewWUrls(urls) {
+    const box = document.getElementById('wImgPreview');
+    if (!box) return;
+    if (!urls.length) { box.innerHTML = ''; return; }
+    box.innerHTML = urls.map(url => {
+      const safe = url.replace(/"/g, '%22');
+      return `<div class="img-preview-item"><img src="${safe}" loading="lazy"
+        onerror="this.parentElement.classList.add('broken')" /></div>`;
+    }).join('');
   }
 
   // ── Category Page Logic ───────────────────────────────────────────
@@ -639,6 +667,7 @@
     _contentLibCache = null; _contentLibSel = new Set();
     const _clp = document.getElementById('wContentLib');
     if (_clp) _clp.style.display = 'none';
+    _previewWUrls([]);
     document.getElementById('workModal').classList.add('open');
     document.getElementById('workModalBackdrop').classList.add('open');
   }
@@ -663,6 +692,7 @@
     _contentLibCache = null; _contentLibSel = new Set();
     const _clp = document.getElementById('wContentLib');
     if (_clp) _clp.style.display = 'none';
+    renderWImgPreview();
     document.getElementById('workModal').classList.add('open');
     document.getElementById('workModalBackdrop').classList.add('open');
   }

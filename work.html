@@ -122,7 +122,7 @@
             <div id="ewContentLib" class="thumb-lib-panel" style="display:none"></div>
           </div>
           <!-- Live preview -->
-          <div id="ewImgPreview" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
+          <div id="ewImgPreview" class="img-preview-grid"></div>
         </div>
         <div class="prog-field">
           <label>影音連結 Videos（YouTube / Vimeo / MP4，每行一個）</label>
@@ -340,31 +340,40 @@
   function ewContentToggle(i) {
     if (_ewContentSel.has(i)) _ewContentSel.delete(i); else _ewContentSel.add(i);
     renderEWContentLib();
+    _ewPreviewFromGallery();
   }
-  function ewContentAll()   { _ewContentSel = new Set(_ewContentCache.map((_,i)=>i)); renderEWContentLib(); }
-  function ewContentClear() { _ewContentSel = new Set(); renderEWContentLib(); }
+  function ewContentAll()   { _ewContentSel = new Set(_ewContentCache.map((_,i)=>i)); renderEWContentLib(); _ewPreviewFromGallery(); }
+  function ewContentClear() { _ewContentSel = new Set(); renderEWContentLib(); _ewPreviewFromGallery(); }
 
   function ewContentApply() {
     if (!_ewContentCache?.length) return;
     const paths = [..._ewContentSel].sort((a,b)=>a-b).map(i => _ewContentCache[i].path);
     const ta = document.getElementById('ewImages');
     if (ta) { ta.value = paths.join('\n'); ta.style.borderColor = 'rgba(0,238,221,0.7)'; setTimeout(() => { ta.style.borderColor = ''; }, 1200); }
-    renderEWImgPreview();
+    _ewPreviewUrls(paths);
   }
 
   // ── Live Image Preview ────────────────────────────────────────────
+  function _ewPreviewFromGallery() {
+    if (!_ewContentCache) return;
+    const paths = [..._ewContentSel].sort((a,b)=>a-b).map(i => _ewContentCache[i].path);
+    _ewPreviewUrls(paths);
+  }
+
   function renderEWImgPreview() {
     const urls = (document.getElementById('ewImages')?.value || '')
       .split('\n').map(s => ewNormPath(s)).filter(Boolean);
+    _ewPreviewUrls(urls);
+  }
+
+  function _ewPreviewUrls(urls) {
     const box = document.getElementById('ewImgPreview');
     if (!box) return;
     if (!urls.length) { box.innerHTML = ''; return; }
     box.innerHTML = urls.map(url => {
       const safe = url.replace(/"/g, '%22');
-      return `<div style="position:relative;width:64px;height:64px;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);flex-shrink:0;background:rgba(255,255,255,0.04)">
-        <img src="${safe}" style="width:100%;height:100%;object-fit:cover" loading="lazy"
-             onerror="this.parentElement.style.opacity='.3';this.style.display='none'" />
-      </div>`;
+      return `<div class="img-preview-item"><img src="${safe}" loading="lazy"
+        onerror="this.parentElement.classList.add('broken')" /></div>`;
     }).join('');
   }
 
