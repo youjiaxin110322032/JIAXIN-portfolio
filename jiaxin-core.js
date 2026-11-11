@@ -104,6 +104,7 @@ const _DEFAULTS = [
   { id:'p4', title:'3D 建模動畫',  titleEn:'3D Modeling',         color:'#00aaff', tags:['3D','Blender','Animation'],        images:[], content:'' },
   { id:'p5', title:'品牌識別設計', titleEn:'Brand Identity',      color:'#ff44aa', tags:['Brand','Logo','Identity'],         images:[], content:'' },
   { id:'p6', title:'包裝平面設計', titleEn:'Graphic Design',      color:'#44dd88', tags:['Graphic','Print','Packaging'],     images:[], content:'' },
+  { id:'p7', title:'網頁設計/APP', titleEn:'Web Design / APP',   color:'#ffaa00', tags:['Web','UI/UX','APP'],               images:[], content:'' },
 ];
 
 function getProjects() {
@@ -466,10 +467,11 @@ const _dataReady = fetch('/_data.json')
   .then(r => r.ok ? r.json() : {})
   .then(data => {
     if (!Object.keys(data).length) return;
-    const hasAny = [_PROJ_KEY, _WORKS_KEY, _CAR_KEY].some(k => localStorage.getItem(k));
-    if (hasAny) return; // localStorage already populated — don't overwrite
+    // Production: only fill keys that are missing — never overwrite visitor data.
+    // Dev server (localhost:3000): _data.json is the source of truth (every save is
+    // mirrored to it by _devSync), so reload it each time to pick up file edits.
     Object.entries(data).forEach(([k, v]) => {
-      if (!localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify(v));
+      if (_IS_DEV || !localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify(v));
     });
   })
   .catch(() => {}); // graceful fail — site still works without _data.json

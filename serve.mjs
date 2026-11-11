@@ -25,6 +25,7 @@ const mime = {
 };
 
 createServer(async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -81,6 +82,8 @@ createServer(async (req, res) => {
   }
 
   let url = req.url === '/' ? '/index.html' : req.url.split('?')[0];
+  try { url = decodeURIComponent(url); } catch { res.writeHead(400); res.end('Bad request'); return; }
+  if (url.includes('..')) { res.writeHead(403); res.end('Forbidden'); return; }
   const filePath = join(__dirname, url);
   try {
     const data = await readFile(filePath);
