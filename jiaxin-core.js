@@ -454,6 +454,8 @@ function _devSync() {
     const v = localStorage.getItem(k);
     if (v) try { out[k] = JSON.parse(v); } catch {}
   });
+  const ver = Number(localStorage.getItem(_DATA_VER_KEY));
+  if (ver) out._version = ver; // keep data version when mirroring to _data.json
   fetch('/api/sync-data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -461,18 +463,27 @@ function _devSync() {
   }).catch(() => {});
 }
 
-// On first visit (empty localStorage), load data from _data.json.
-// Pages await this promise before rendering so content is available.
-const _dataReady = fetch('/_data.json')
+// Load data from _data.json. Pages await this promise before rendering.
+//  - Dev server (localhost:3000): _data.json is the source of truth (every save is
+//    mirrored to it by _devSync), so it is reloaded each time.
+//  - Production: keys missing from localStorage are filled in. In addition, when
+//    "_version" in _data.json differs from the version stored in the visitor's
+//    browser, works & projects are refreshed from _data.json (bump "_version"
+//    whenever _data.json content changes and should reach returning visitors).
+const _DATA_VER_KEY = 'jx_data_version';
+const _VERSIONED_KEYS = [_PROJ_KEY, _WORKS_KEY];
+const _dataReady = fetch('/_data.json', { cache: 'no-store' })
   .then(r => r.ok ? r.json() : {})
   .then(data => {
     if (!Object.keys(data).length) return;
-    // Production: only fill keys that are missing — never overwrite visitor data.
-    // Dev server (localhost:3000): _data.json is the source of truth (every save is
-    // mirrored to it by _devSync), so reload it each time to pick up file edits.
+    const ver = data._version != null ? String(data._version) : null;
+    const verChanged = ver !== null && localStorage.getItem(_DATA_VER_KEY) !== ver;
     Object.entries(data).forEach(([k, v]) => {
-      if (_IS_DEV || !localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify(v));
+      if (k === '_version') return;
+      const refresh = _IS_DEV || (verChanged && _VERSIONED_KEYS.includes(k));
+      if (refresh || !localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify(v));
     });
+    if (ver !== null) localStorage.setItem(_DATA_VER_KEY, ver);
   })
   .catch(() => {}); // graceful fail — site still works without _data.json
 
