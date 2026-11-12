@@ -99,7 +99,7 @@ const _PROJ_KEY = 'jx_projects_v2';
 
 const _DEFAULTS = [
   { id:'p1', title:'動態影音剪輯', titleEn:'Video Editing',      color:'#00eedd', tags:['Video','Motion','After Effects'], images:[], content:'' },
-  { id:'p2', title:'AR 擴增實境',  titleEn:'Augmented Reality',  color:'#0088ff', tags:['AR','Interactive','Unity'],        images:[], content:'' },
+  { id:'p2', title:'ARVR/互動遊戲', titleEn:'AR / VR / Interactive Games', color:'#0088ff', tags:['AR','VR','Interactive','Unity'], images:[], content:'' },
   { id:'p3', title:'展場空間設計', titleEn:'Exhibition Design',   color:'#7744ff', tags:['Exhibition','Spatial','Design'],   images:[], content:'' },
   { id:'p4', title:'3D 建模動畫',  titleEn:'3D Modeling',         color:'#00aaff', tags:['3D','Blender','Animation'],        images:[], content:'' },
   { id:'p5', title:'品牌識別設計', titleEn:'Brand Identity',      color:'#ff44aa', tags:['Brand','Logo','Identity'],         images:[], content:'' },
