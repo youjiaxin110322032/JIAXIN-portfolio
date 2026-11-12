@@ -238,3 +238,29 @@
   .dm-desc-block { padding: 20px; }
   .work-back { align-self: center; }
 }
+
+/* 專案網站連結 + 內嵌預覽 */
+.dm-site-block { display: flex; flex-direction: column; gap: 14px; }
+.dm-site-btn {
+  align-self: flex-start;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.06);
+  color: var(--off-white);
+  text-decoration: none;
+  font-size: 14px; letter-spacing: 0.04em;
+  transition: background 0.2s, border-color 0.2s;
+}
+.dm-site-btn:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.4); }
+.dm-site-frame {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.07);
+  aspect-ratio: 16/10;
+  min-height: 420px;
+}
+.dm-site-frame iframe { width: 100%; height: 100%; border: none; display: block; background: #fff; }
+.dm-site-note { font-size: 12px; color: var(--gray); margin: 0; }
+@media (max-width: 640px) { .dm-site-frame { aspect-ratio: 9/14; min-height: 480px; } }

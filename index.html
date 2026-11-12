@@ -424,9 +424,27 @@
           track.appendChild(slide);
         });
         dots.innerHTML = imgs.map((_,i)=>`<span class="c-dot${i===_carIdx?' active':''}" onclick="carouselGo(${i})"></span>`).join('');
+        // 輪播框比例跟著當前圖片（直式長圖也能完整顯示，不被裁切）
+        const wrap = track.parentElement;
+        const curImg = track.querySelectorAll('.carousel-real img')[_carIdx];
+        const fit = () => {
+          if (!curImg.naturalWidth) return;
+          const r = curImg.naturalWidth / curImg.naturalHeight;
+          wrap.style.aspectRatio = String(Math.min(Math.max(r, 0.6), 2.4));
+        };
+        if (curImg.complete) fit(); else curImg.addEventListener('load', fit, { once: true });
       } else {
         empty.style.display = 'block';
         dots.innerHTML = '';
+        // 預設品牌圖：同樣依圖片原始比例調整輪播框
+        const wrap = track.parentElement;
+        const defImg = empty.querySelector('img');
+        const fitDef = () => {
+          if (!defImg.naturalWidth) return;
+          const r = defImg.naturalWidth / defImg.naturalHeight;
+          wrap.style.aspectRatio = String(Math.min(Math.max(r, 0.6), 2.4));
+        };
+        if (defImg.complete) fitDef(); else defImg.addEventListener('load', fitDef, { once: true });
       }
     }
     function carouselMove(dir) {
@@ -655,15 +673,16 @@
     });
 
     // ── 游標光暈線性插值追蹤（僅限滑鼠裝置）──
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-      const glowOuter = document.querySelector('.glow.outer');
-      const glowInner = document.querySelector('.glow.inner');
+    // 這些變數需在區塊外宣告：視窗縮放與蠟燭影片 hover 也會用到
+    const glowOuter = document.querySelector('.glow.outer');
+    const glowInner = document.querySelector('.glow.inner');
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
 
+    if (!window.matchMedia('(pointer: coarse)').matches) {
       const SPEED_OUTER = 0.08;
       const SPEED_INNER = 0.16;
 
-      let targetX = window.innerWidth / 2;
-      let targetY = window.innerHeight / 2;
       let ox = targetX, oy = targetY;
       let ix = targetX, iy = targetY;
 
@@ -839,13 +858,13 @@
     if (candleEl) {
       // 滑入蠟燭影片：加入 fire class 切換為橘紅色光暈
       candleEl.addEventListener('mouseenter', () => {
-        glowInner.classList.add('fire');
-        glowOuter.classList.add('fire');
+        glowInner?.classList.add('fire');
+        glowOuter?.classList.add('fire');
       });
       // 滑出蠟燭影片：移除 fire class 恢復預設藍白光暈
       candleEl.addEventListener('mouseleave', () => {
-        glowInner.classList.remove('fire');
-        glowOuter.classList.remove('fire');
+        glowInner?.classList.remove('fire');
+        glowOuter?.classList.remove('fire');
       });
     }
   </script>

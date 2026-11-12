@@ -129,6 +129,13 @@
           <textarea id="ewVideos" rows="3" placeholder="https://youtube.com/watch?v=...&#10;https://vimeo.com/12345678"></textarea>
         </div>
         <div class="prog-field">
+          <label>專案網站連結 Site URL（https://，可留空）</label>
+          <input type="url" id="ewLink" placeholder="https://example.vercel.app/" />
+          <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;cursor:pointer">
+            <input type="checkbox" id="ewEmbed" style="width:auto" /> 在作品頁直接內嵌預覽（對方網站需允許被內嵌）
+          </label>
+        </div>
+        <div class="prog-field">
           <label>附件檔案 Files（每行格式：名稱 | URL）</label>
           <textarea id="ewFiles" rows="3" placeholder="設計稿 PDF|https://example.com/file.pdf"></textarea>
         </div>
@@ -444,6 +451,18 @@
       hasContent = true;
     }
 
+    // 專案網站：開啟按鈕 +（可選）直接內嵌預覽
+    const siteUrl = /^https:\/\//i.test(w.link || '') ? sanitizeURL(w.link) : '';
+    if (siteUrl) {
+      const safeSite = sanitizeHTML(siteUrl);
+      html += `<div class="dm-site-block">
+        <a href="${safeSite}" target="_blank" rel="noopener noreferrer" class="dm-site-btn">🔗 開啟網站 Visit Site ↗</a>
+        ${w.embed ? `<div class="dm-site-frame"><iframe src="${safeSite}" title="${sanitizeHTML(w.title)}" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer"></iframe></div>
+        <p class="dm-site-note">若畫面空白或無法操作，請點上方「開啟網站」在新分頁瀏覽。</p>` : ''}
+      </div>`;
+      hasContent = true;
+    }
+
     // Images at natural ratio — alternating widths for DM feel
     (w.images || []).forEach((url, i) => {
       const safeImg = sanitizeURL(url);
@@ -521,6 +540,8 @@
     document.getElementById('ewImages').value  = (w.images  || []).join('\n');
     document.getElementById('ewVideos').value  = (w.videos  || []).join('\n');
     document.getElementById('ewFiles').value   = (w.files   || []).map(f => f.name + '|' + f.url).join('\n');
+    document.getElementById('ewLink').value    = w.link || '';
+    document.getElementById('ewEmbed').checked = !!w.embed;
     document.getElementById('ewTags').value    = (w.tags    || []).join(', ');
     document.getElementById('ewContent').value = w.content || '';
     // Reset image lib state so it re-syncs to current images
@@ -550,6 +571,8 @@
       images:  document.getElementById('ewImages').value.split('\n').map(s => ewNormPath(s)).filter(Boolean),
       videos:  document.getElementById('ewVideos').value.split('\n').map(s => s.trim()).filter(Boolean),
       files:   parseFileList(document.getElementById('ewFiles').value),
+      link:    (/^https:\/\//i.test(document.getElementById('ewLink').value.trim()) ? document.getElementById('ewLink').value.trim() : ''),
+      embed:   document.getElementById('ewEmbed').checked,
       content: document.getElementById('ewContent').value.trim(),
     };
     data.tags = tagsArr.length ? tagsArr : autoGenerateTags(data);

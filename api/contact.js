@@ -3,6 +3,7 @@
 // 執行環境：Node.js（Vercel 預設 runtime）
 
 import nodemailer from 'nodemailer'; // 🌟 修正 1：import 移到檔案最頂端
+import { cleanText, injectionScore, safeDisplayName, wrapUntrusted } from './_security.js';
 
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
@@ -46,12 +47,19 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: '輸入內容超過長度限制' });
   }
 
-  // ── 6. 伺服器端淨化（移除所有 HTML 標籤）─────────────────────────
+  // ── 6. 伺服器端淨化（移除 HTML、隱形字元、控制字元；單行欄位不允許換行）──
   const safe = {
-    name:    stripTags(name),
-    email:   stripTags(email).toLowerCase(),
-    message: stripTags(message),
+    name:    safeDisplayName(name),
+    email:   cleanText(email).toLowerCase(),
+    message: cleanText(message, { multiline: true }),
   };
+  // 淨化後再驗證一次信箱（防止藉由特殊字元繞過格式檢查）
+  if (!EMAIL_RE.test(safe.email) || !safe.message) {
+    return res.status(400).json({ error: '輸入內容格式不正確' });
+  }
+
+  // ── 6b. 提示詞注入偵測（只標記警示，不阻擋，避免誤傷正常訪客）──
+  const flagged = injectionScore(safe.name + ' ' + safe.message) > 0;
 
   // ── 7. 寄信服務 (Nodemailer + Gmail App Password) ─────────────
   try {
@@ -64,15 +72,16 @@ export default async function handler(req, res) {
     });
 
     // 🌟 修正 3：補齊信件的各個欄位
-    await transporter.sendMail({ 
-      from: `"${safe.name}" <${safe.email}>`, // 顯示是誰寄的
+    await transporter.sendMail({
+      // 寄件者固定為自己的信箱，不使用訪客輸入（防止偽造寄件者與標頭注入）
+      from: `"作品集網站" <${process.env.GMAIL_USER}>`,
       to: process.env.TO_EMAIL || 'abc11032203@gmail.com',
-      replyTo: safe.email,                    // 讓你按回覆時直接回信給對方
-      subject: `【作品集網站聯絡】來自 ${safe.name} 的訊息`,
-      text: safe.message 
+      replyTo: safe.email,                    // 按回覆時直接回信給對方
+      subject: `${flagged ? '【⚠疑似惡意】' : ''}【作品集網站聯絡】來自 ${safe.name} 的訊息`,
+      text: wrapUntrusted({ ...safe, flagged }),
     });
 
-    console.log('[contact-form] 信件已發送', safe);
+    console.log('[contact-form] 信件已發送', { flagged, length: safe.message.length });
     return res.status(200).json({ ok: true });
 
   } catch (error) {
